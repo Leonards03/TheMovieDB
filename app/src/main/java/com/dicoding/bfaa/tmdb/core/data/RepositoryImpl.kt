@@ -3,7 +3,6 @@ package com.dicoding.bfaa.tmdb.core.data
 import com.dicoding.bfaa.tmdb.core.data.mapper.mapToDomain
 import com.dicoding.bfaa.tmdb.core.data.mapper.mapToEntity
 import com.dicoding.bfaa.tmdb.core.data.source.local.LocalDataSource
-import com.dicoding.bfaa.tmdb.core.data.source.local.entity.MovieEntity
 import com.dicoding.bfaa.tmdb.core.data.source.remote.RemoteDataSource
 import com.dicoding.bfaa.tmdb.core.data.source.remote.response.MovieResponse
 import com.dicoding.bfaa.tmdb.core.data.source.remote.response.Response
@@ -64,7 +63,7 @@ class RepositoryImpl @Inject constructor(
         }.asFlow()
 
     override fun fetchTopRatedMovie() =
-        object : LoadResource<List<Movie>,List<MovieEntity>, List<MovieResponse>>(ioDispatcher) {
+        object : LoadResource<List<Movie>, List<MovieResponse>>(ioDispatcher) {
             override suspend fun createCall(): Flow<Response<List<MovieResponse>>> =
                 remoteDataSource.getTopRatedMovies()
 
@@ -79,6 +78,10 @@ class RepositoryImpl @Inject constructor(
 
             override suspend fun loadFromDB(): Flow<Movie?> =
                 localDataSource.getFavoriteMovie(id)
+//                    ?.map { movieEntity ->
+//                    Timber.d(movieEntity.toString())
+//                    movieEntity.mapToDomain()
+//                }
 
             override suspend fun createCall(): Flow<Response<MovieResponse>> =
                 remoteDataSource.getMovie(id)
