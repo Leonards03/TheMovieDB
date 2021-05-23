@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">The Movie DB</string>
+    <string name="image_url">https://image.tmdb.org/t/p/w500</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_movie">Movie</string>
+    <string name="nav_tv_show">Tv Show</string>
+    <string name="nav_favorite">Favorite</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_now_playing">Now Playing</string>
+    <string name="title_discover_movie">Discover</string>
+    <string name="title_upcoming_movie">Upcoming Movies</string>
+    <string name="title_top_rated_movie">Top Rated Movies</string>
+    <string name="title_popular_movie">Popular Movie</string>
+    <string name="search_title">search</string>
+    <string name="search_hint">Write the keywords i.e title</string>
+    <string name="title_now_airing">Now Airing</string>
+    <string name="title_popular_tv">Popular Shows</string>
+    <string name="add_to_my_list">Add to My List</string>
+    <string name="view_all">View All</string>
+    <string name="no_connection">No Connection!</string>
+    <string name="retry">Retry</string>
+    <string name="title_activity_splash">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>
