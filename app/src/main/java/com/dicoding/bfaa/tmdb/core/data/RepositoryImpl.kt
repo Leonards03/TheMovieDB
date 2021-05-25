@@ -7,15 +7,18 @@ import com.dicoding.bfaa.tmdb.core.data.source.remote.RemoteDataSource
 import com.dicoding.bfaa.tmdb.core.data.source.remote.response.MovieResponse
 import com.dicoding.bfaa.tmdb.core.data.source.remote.response.Response
 import com.dicoding.bfaa.tmdb.core.data.source.remote.response.TvShowResponse
+import com.dicoding.bfaa.tmdb.core.data.states.LoadResource
 import com.dicoding.bfaa.tmdb.core.di.IoDispatcher
 import com.dicoding.bfaa.tmdb.core.domain.model.Movie
 import com.dicoding.bfaa.tmdb.core.domain.model.TvShow
 import com.dicoding.bfaa.tmdb.core.domain.repository.Repository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -78,10 +81,6 @@ class RepositoryImpl @Inject constructor(
 
             override suspend fun loadFromDB(): Flow<Movie?> =
                 localDataSource.getFavoriteMovie(id)
-//                    ?.map { movieEntity ->
-//                    Timber.d(movieEntity.toString())
-//                    movieEntity.mapToDomain()
-//                }
 
             override suspend fun createCall(): Flow<Response<MovieResponse>> =
                 remoteDataSource.getMovie(id)
@@ -132,8 +131,8 @@ class RepositoryImpl @Inject constructor(
             override fun shouldFetch(data: TvShow?): Boolean =
                 data == null
 
-//            override suspend fun loadFromDB(): Flow<TvShow>? =
-//                localDataSource.getFavoriteTvShow(id).map { tvShow -> tvShow. }
+            override suspend fun loadFromDB(): Flow<TvShow?> =
+                localDataSource.getFavoriteTvShow(id)
 
             override suspend fun createCall(): Flow<Response<TvShowResponse>> =
                 remoteDataSource.getTvShow(id)
@@ -147,18 +146,10 @@ class RepositoryImpl @Inject constructor(
             .distinctUntilChanged()
             .flowOn(ioDispatcher)
             .map { it.mapToDomain() }
-//        var pagingSource: MoviePagingSource = MoviePagingSource(emptyList())
-//        CoroutineScope(ioDispatcher).launch {
-//            localDataSource.getFavoriteMovies()
-//                .distinctUntilChanged()
-//                .flowOn(ioDispatcher)
-//                .map { it.mapToDomain() }
-//                .collectLatest {
-//                    pagingSource = MoviePagingSource(it)
-//                }
-//        }
 
-    fun getFavoriteTvShows() = localDataSource.getFavoriteTvShows().map { it.mapToDomain() }
+    fun getFavoriteTvShows() =
+        localDataSource.getFavoriteTvShows()
+            .map { it.mapToDomain() }
 
     override fun setFavorite(movie: Movie, itemIsFavorite: Boolean) {
         CoroutineScope(ioDispatcher).launch {

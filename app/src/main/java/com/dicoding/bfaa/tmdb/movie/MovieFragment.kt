@@ -8,18 +8,18 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.bfaa.tmdb.R
-import com.dicoding.bfaa.tmdb.core.data.Resource
-import com.dicoding.bfaa.tmdb.core.data.Resource.*
+import com.dicoding.bfaa.tmdb.core.data.states.Resource
+import com.dicoding.bfaa.tmdb.core.data.states.Resource.*
 import com.dicoding.bfaa.tmdb.core.domain.model.Movie
 import com.dicoding.bfaa.tmdb.core.extension.checkConnectivity
 import com.dicoding.bfaa.tmdb.core.extension.invisible
-import com.dicoding.bfaa.tmdb.core.extension.visible
 import com.dicoding.bfaa.tmdb.core.presentation.adapter.ItemAdapter
 import com.dicoding.bfaa.tmdb.databinding.FragmentMovieBinding
 import com.dicoding.bfaa.tmdb.databinding.HeaderLayoutBinding
 import com.dicoding.bfaa.tmdb.detail.DetailActivity
-import com.dicoding.bfaa.tmdb.detail.DetailActivity.Companion.EXTRA_DATA_IS_MOVIE
-import com.dicoding.bfaa.tmdb.detail.DetailActivity.Companion.EXTRA_ID
+import com.dicoding.bfaa.tmdb.detail.DetailViewModel.Companion.EXTRA_ID
+import com.dicoding.bfaa.tmdb.detail.DetailViewModel.Companion.EXTRA_TYPE
+import com.dicoding.bfaa.tmdb.detail.DetailViewModel.Companion.MOVIE_TYPE
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -77,7 +77,7 @@ class MovieFragment : Fragment() {
         itemAdapter: ItemAdapter,
         headerLayoutBinding: HeaderLayoutBinding,
         title: String,
-    ){
+    ) {
         with(recyclerView) {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
@@ -87,7 +87,7 @@ class MovieFragment : Fragment() {
                 .attachToRecyclerView(recyclerView)
         }
 
-        with(headerLayoutBinding){
+        with(headerLayoutBinding) {
             tvHeader.text = title
         }
 
@@ -181,9 +181,9 @@ class MovieFragment : Fragment() {
         is Success -> bindRecyclerView(popularAdapter, resource.data)
     }
 
-    private fun <T> observeList(resource: T) {
-
-    }
+//    private fun <T> observeList(resource: T, action: (adapter: ItemAdapter, data: T)-> Unit) =
+//        when(resource){}
+//
 
 
     /**
@@ -210,7 +210,7 @@ class MovieFragment : Fragment() {
     private fun intentToDetailsActivity(id: Int) =
         Intent(requireActivity(), DetailActivity::class.java).run {
             putExtra(EXTRA_ID, id)
-            putExtra(EXTRA_DATA_IS_MOVIE, true)
+            putExtra(EXTRA_TYPE, MOVIE_TYPE)
             startActivity(this)
         }
 

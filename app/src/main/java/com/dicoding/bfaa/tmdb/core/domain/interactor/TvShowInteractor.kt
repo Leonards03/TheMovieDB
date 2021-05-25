@@ -1,6 +1,6 @@
 package com.dicoding.bfaa.tmdb.core.domain.interactor
 
-import com.dicoding.bfaa.tmdb.core.data.Resource
+import com.dicoding.bfaa.tmdb.core.data.states.Resource
 import com.dicoding.bfaa.tmdb.core.domain.model.TvShow
 import com.dicoding.bfaa.tmdb.core.domain.repository.Repository
 import com.dicoding.bfaa.tmdb.core.domain.usecase.TvShowUseCase

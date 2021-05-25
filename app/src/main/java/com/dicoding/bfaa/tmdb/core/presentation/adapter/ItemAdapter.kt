@@ -10,7 +10,6 @@ import com.dicoding.bfaa.tmdb.core.extension.glideImageWithOptions
 import com.dicoding.bfaa.tmdb.core.presentation.viewholder.VerticalViewHolder
 import com.dicoding.bfaa.tmdb.databinding.ItemMovieBinding
 import com.dicoding.bfaa.tmdb.databinding.ItemRowMovieBinding
-import com.dicoding.bfaa.tmdb.databinding.ItemTvShowBinding
 
 class ItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val list: ArrayList<Any> = ArrayList()
@@ -44,7 +43,7 @@ class ItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             )
         )
         VERTICAL -> VerticalViewHolder(
-            ItemRowMovieBinding.inflate(
+            ItemMovieBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

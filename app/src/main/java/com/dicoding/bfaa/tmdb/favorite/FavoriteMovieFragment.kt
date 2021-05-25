@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.bfaa.tmdb.core.domain.model.Movie
 import com.dicoding.bfaa.tmdb.core.presentation.adapter.FavoriteAdapter
-import com.dicoding.bfaa.tmdb.core.presentation.adapter.MoviePagedListAdapter
 import com.dicoding.bfaa.tmdb.databinding.FragmentFavoriteMovieBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -41,7 +42,7 @@ class FavoriteMovieFragment : Fragment() {
 
     private fun setupRecyclerView() = binding?.apply {
         rvFavoriteMovie.setHasFixedSize(true)
-        rvFavoriteMovie.layoutManager = LinearLayoutManager(activity)
+        rvFavoriteMovie.layoutManager = GridLayoutManager(context,2)
         rvFavoriteMovie.adapter = favoriteMoviesAdapter
     }
 

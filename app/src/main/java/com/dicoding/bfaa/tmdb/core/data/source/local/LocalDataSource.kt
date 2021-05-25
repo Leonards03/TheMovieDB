@@ -21,7 +21,9 @@ class LocalDataSource @Inject constructor(
         tmdbDao.getFavoriteMovie(id)
             .map { it?.mapToDomain() }
 
-    fun getFavoriteTvShow(id: Int) = tmdbDao.getFavoriteTvShow(id)
+    fun getFavoriteTvShow(id: Int) =
+        tmdbDao.getFavoriteTvShow(id)
+            .map { it?.mapToDomain()}
 
     suspend fun addToFavorite(movie: MovieEntity) = tmdbDao.addToFavorite(movie)
 

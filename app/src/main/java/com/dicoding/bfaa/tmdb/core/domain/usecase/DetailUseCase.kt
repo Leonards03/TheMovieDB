@@ -1,6 +1,6 @@
 package com.dicoding.bfaa.tmdb.core.domain.usecase
 
-import com.dicoding.bfaa.tmdb.core.data.Resource
+import com.dicoding.bfaa.tmdb.core.data.states.Resource
 import com.dicoding.bfaa.tmdb.core.domain.model.Movie
 import com.dicoding.bfaa.tmdb.core.domain.model.TvShow
 import kotlinx.coroutines.flow.Flow

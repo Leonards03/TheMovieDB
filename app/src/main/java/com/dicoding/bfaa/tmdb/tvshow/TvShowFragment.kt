@@ -10,13 +10,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.dicoding.bfaa.tmdb.R
-import com.dicoding.bfaa.tmdb.core.data.Resource
-import com.dicoding.bfaa.tmdb.core.data.Resource.*
+import com.dicoding.bfaa.tmdb.core.data.states.Resource
+import com.dicoding.bfaa.tmdb.core.data.states.Resource.*
 import com.dicoding.bfaa.tmdb.core.domain.model.TvShow
 import com.dicoding.bfaa.tmdb.core.presentation.adapter.ItemAdapter
 import com.dicoding.bfaa.tmdb.databinding.FragmentTvShowBinding
 import com.dicoding.bfaa.tmdb.detail.DetailActivity
+import com.dicoding.bfaa.tmdb.detail.DetailViewModel.Companion.EXTRA_ID
+import com.dicoding.bfaa.tmdb.detail.DetailViewModel.Companion.EXTRA_TYPE
+import com.dicoding.bfaa.tmdb.detail.DetailViewModel.Companion.TV_SHOW_TYPE
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -121,8 +123,8 @@ class TvShowFragment : Fragment() {
      */
     private fun intentToDetailsActivity(id: Int) =
         Intent(requireActivity(), DetailActivity::class.java).run {
-            putExtra(DetailActivity.EXTRA_ID, id)
-            putExtra(DetailActivity.EXTRA_DATA_IS_MOVIE, false)
+            putExtra(EXTRA_ID, id)
+            putExtra(EXTRA_TYPE, TV_SHOW_TYPE)
             startActivity(this)
         }
 

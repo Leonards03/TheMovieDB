@@ -2,12 +2,11 @@ package com.dicoding.bfaa.tmdb.core.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.bfaa.tmdb.core.domain.model.Movie
 import com.dicoding.bfaa.tmdb.core.domain.model.TvShow
-import com.dicoding.bfaa.tmdb.core.presentation.utils.MovieListDiffCallback
 import com.dicoding.bfaa.tmdb.core.presentation.viewholder.VerticalViewHolder
+import com.dicoding.bfaa.tmdb.databinding.ItemMovieBinding
 import com.dicoding.bfaa.tmdb.databinding.ItemRowMovieBinding
 
 class FavoriteAdapter : RecyclerView.Adapter<VerticalViewHolder>() {
@@ -27,7 +26,7 @@ class FavoriteAdapter : RecyclerView.Adapter<VerticalViewHolder>() {
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalViewHolder =
         VerticalViewHolder(
-            ItemRowMovieBinding.inflate(
+            ItemMovieBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TheMovieDB.NoActionBar">
         <activity
-            android:name=".SplashActivity"
+            android:name=".splash.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_splash"
             android:theme="@style/Theme.TheMovieDB.NoActionBar.Fullscreen">
