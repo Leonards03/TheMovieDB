@@ -1,23 +1,10 @@
 package com.dicoding.bfaa.tmdb.core.data.mapper
 
 import com.dicoding.bfaa.tmdb.core.data.source.local.entity.MovieEntity
+import com.dicoding.bfaa.tmdb.core.data.source.remote.response.CreditsResponse
 import com.dicoding.bfaa.tmdb.core.data.source.remote.response.GenreResponse
 import com.dicoding.bfaa.tmdb.core.data.source.remote.response.MovieResponse
 import com.dicoding.bfaa.tmdb.core.domain.model.Movie
-//
-//fun Movie.mapToEntity(): MovieEntity =
-//    MovieEntity(
-//        id = id,
-//        title = title,
-//        backdrop = valueOrEmpty(backdrop),
-//        poster = valueOrEmpty(poster),
-//        overview = overview,
-//        genres = genres,
-//        voteAverage = voteAverage.toDouble(),
-//        voteCount = voteCount,
-//        runtime = runtime,
-//        releaseDate = releaseDate
-//    )
 
 fun MovieResponse.mapToDomain(): Movie =
     Movie(
@@ -27,10 +14,11 @@ fun MovieResponse.mapToDomain(): Movie =
         poster = valueOrEmpty(poster),
         genres = mapGenreList(genres),
         overview = overview,
-        voteAverage = voteAverage,
+        voteAverage = voteAverage.toDouble(),
         voteCount = voteCount,
         runtime = runtime,
-        releaseDate = releaseDate
+        releaseDate = releaseDate,
+        director = getDirectors(credits)
     )
 
 fun List<MovieResponse>.mapToDomain() =
@@ -46,10 +34,10 @@ fun Movie.mapToEntity() =
         poster = valueOrEmpty(poster),
         overview = overview,
         genres = genres,
-        voteAverage = voteAverage.toDouble(),
+        voteAverage = voteAverage,
         voteCount = voteCount,
         runtime = runtime,
-        releaseDate = releaseDate
+        releaseDate = releaseDate,
     )
 
 fun MovieEntity.mapToDomain() =
@@ -63,7 +51,8 @@ fun MovieEntity.mapToDomain() =
         voteAverage = voteAverage,
         voteCount = voteCount,
         runtime = runtime,
-        releaseDate = releaseDate
+        releaseDate = releaseDate,
+        director = String()
     )
 
 @JvmName("mapToDomainMovieEntity")
@@ -76,8 +65,15 @@ fun valueOrEmpty(value: String?) =
     value ?: String()
 
 fun mapGenreList(genres: List<GenreResponse>?) =
-    genres?.joinToString(",") ?: String()
+    genres?.map { it.name }
+        ?.subList(0, if (genres.size > 1) 2 else genres.size)
+        ?.joinToString(",") ?: String()
 
+fun getDirectors(list: CreditsResponse?): String {
+    val director = list?.crew?.firstOrNull { it.job == "Director" }
+
+    return director?.name ?: String()
+}
 
 
 

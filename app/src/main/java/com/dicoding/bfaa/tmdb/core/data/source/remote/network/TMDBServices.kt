@@ -1,51 +1,49 @@
 package com.dicoding.bfaa.tmdb.core.data.source.remote.network
 
+import com.dicoding.bfaa.tmdb.core.data.Constants
 import com.dicoding.bfaa.tmdb.core.data.source.remote.response.ListResponse
 import com.dicoding.bfaa.tmdb.core.data.source.remote.response.MovieResponse
 import com.dicoding.bfaa.tmdb.core.data.source.remote.response.TvShowResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface TMDBServices {
     @GET("search/movie")
-    suspend fun searchMovie(query: String, page: Int)
+    suspend fun searchMovie(
+        @Query("query")
+        query: String,
+        @Query("page")
+        page: Int = 1,
+    ): ListResponse<MovieResponse>
 
     @GET("movie/now_playing")
-    suspend fun getNowPlayingMovies(): ListResponse<MovieResponse>
-
-    @GET("movie/top_rated")
-    suspend fun getTopRatedMovies(): ListResponse<MovieResponse>
-
-    @GET("movie/upcoming")
-    suspend fun getUpcomingMovies(): ListResponse<MovieResponse>
-
-    @GET("movie/popular")
-    suspend fun getPopularMovies(): ListResponse<MovieResponse>
-
-    @GET("discover/movie")
-    suspend fun getMovies(): ListResponse<MovieResponse>
+    suspend fun getMovies(
+        @Query("page")
+        page: Int = 1,
+    ): ListResponse<MovieResponse>
 
     @GET("movie/{movie_id}")
     suspend fun getMovie(
         @Path("movie_id")
         id: Int,
+        @Query("append_to_response")
+        extra: String = Constants.appendToResponse,
     ): MovieResponse
 
-
     @GET("search/tv")
-    suspend fun searchTvShow(query: String, page: Int)
-
-    @GET("tv/popular")
-    suspend fun getPopularTvShows(): ListResponse<TvShowResponse>
-
-    @GET("tv/airing_today")
-    suspend fun getAiringToday(): ListResponse<TvShowResponse>
-
-    @GET("tv/top_rated")
-    suspend fun getLatestTvShow(): ListResponse<TvShowResponse>
+    suspend fun searchTvShow(
+        @Query("query")
+        query: String,
+        @Query("page")
+        page: Int = 1,
+    ): ListResponse<TvShowResponse>
 
     @GET("discover/tv")
-    suspend fun getTvShows(): ListResponse<TvShowResponse>
+    suspend fun getTvShows(
+        @Query("page")
+        page: Int = 1,
+    ): ListResponse<TvShowResponse>
 
     @GET("tv/{tv_id}")
     suspend fun getTvShow(

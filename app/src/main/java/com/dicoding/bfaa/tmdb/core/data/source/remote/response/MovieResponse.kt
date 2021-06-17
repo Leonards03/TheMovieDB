@@ -23,4 +23,6 @@ data class MovieResponse(
     val runtime: Int?,
     @SerializedName("release_date")
     val releaseDate: String,
+    @SerializedName("credits")
+    val credits: CreditsResponse
 )

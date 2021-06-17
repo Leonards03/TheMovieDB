@@ -7,8 +7,9 @@ data class Movie(
     val poster: String,
     val genres: String,
     val overview: String,
-    val voteAverage: Number,
+    val voteAverage: Double,
     val voteCount: Int,
     val runtime: Int?,
     val releaseDate: String,
+    val director: String,
 )

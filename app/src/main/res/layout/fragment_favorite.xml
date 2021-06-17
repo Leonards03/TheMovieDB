@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".favorite.FavoriteFragment">
+    tools:context=".home.favorite.FavoriteFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"

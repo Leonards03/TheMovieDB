@@ -29,6 +29,7 @@ class HomeActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host)
         bottomNavConfiguration = AppBarConfiguration.Builder(
             R.id.navigation_movie,
+            R.id.navigation_tv_show,
             R.id.navigation_favorite
         ).build()
 

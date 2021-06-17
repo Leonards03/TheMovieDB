@@ -3,53 +3,55 @@ package com.dicoding.bfaa.tmdb.core.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.dicoding.bfaa.tmdb.core.data.states.ItemType
 import com.dicoding.bfaa.tmdb.core.domain.model.Movie
 import com.dicoding.bfaa.tmdb.core.domain.model.TvShow
-import com.dicoding.bfaa.tmdb.core.presentation.viewholder.VerticalViewHolder
-import com.dicoding.bfaa.tmdb.databinding.ItemMovieBinding
-import com.dicoding.bfaa.tmdb.databinding.ItemRowMovieBinding
+import com.dicoding.bfaa.tmdb.core.presentation.viewholder.CardViewHolder
+import com.dicoding.bfaa.tmdb.databinding.ItemRowLayoutBinding
 
-class FavoriteAdapter : RecyclerView.Adapter<VerticalViewHolder>() {
-    private val list: ArrayList<Any> = ArrayList()
+class FavoriteAdapter<T : Any>(
+    private val onItemClick: (item: T) -> Unit,
+) : RecyclerView.Adapter<CardViewHolder>() {
+    private val list = ArrayList<T>()
 
-    fun submitMovieList(newList: List<Movie>){
-//        val diffCallback = MovieListDiffCallback(list as List<Movie>, newList)
-//        val diffResult = DiffUtil.calculateDiff(diffCallback)
-
-        list.clear()
-        list.addAll(newList)
-//        diffResult.dispatchUpdatesTo(this)
+    fun submitData(newList: List<T>) {
+        with(list) {
+            clear()
+            addAll(newList)
+        }
         notifyDataSetChanged()
     }
 
-    fun submitTvShowList(list: List<TvShow>){
-    }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalViewHolder =
-        VerticalViewHolder(
-            ItemMovieBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder =
+        CardViewHolder(
+            ItemRowLayoutBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
         )
 
-    override fun onBindViewHolder(holder: VerticalViewHolder, position: Int) =
-        if(holder.itemViewType == DATA_MOVIE){
-            holder.bind(list[position] as Movie)
-        } else {
-            holder.bind(list[position] as TvShow)
-        }
-
     override fun getItemViewType(position: Int): Int = when (list[position]) {
-        is Movie -> DATA_MOVIE
-        is TvShow -> DATA_TV_SHOW
+        is Movie -> ItemType.Movie.ordinal
+        is TvShow -> ItemType.TvShow.ordinal
         else -> throw IllegalArgumentException("Undefined data type ")
     }
 
-    override fun getItemCount(): Int = list.size
+    @Suppress("UNCHECKED_CAST")
+    override fun onBindViewHolder(holder: CardViewHolder, position: Int) =
+        when (holder.itemViewType) {
+            ItemType.Movie.ordinal -> {
+                val item = list[position] as Movie
+                val callback = onItemClick as (item: Movie) -> Unit
+                holder.bind(item, callback)
+            }
+            ItemType.TvShow.ordinal -> {
+                val item = list[position] as TvShow
+                val callback = onItemClick as (item: TvShow) -> Unit
+                holder.bind(item, callback)
+            }
+            else -> throw IllegalArgumentException("Undefined itemType")
+        }
 
-    companion object {
-        private const val DATA_MOVIE = 100
-        private const val DATA_TV_SHOW = 101
-    }
+    override fun getItemCount(): Int = list.size
 }

@@ -10,28 +10,26 @@ import com.dicoding.bfaa.tmdb.core.domain.usecase.MovieUseCase
 import com.dicoding.bfaa.tmdb.core.domain.usecase.TvShowUseCase
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
-import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(ViewModelComponent::class)
 abstract class AppModule {
     @Binds
     @ViewModelScoped
-    abstract fun provideMovieUseCase(movieInteractor: MovieInteractor): MovieUseCase
+    abstract fun bindsMovieUseCase(movieInteractor: MovieInteractor): MovieUseCase
 
     @Binds
     @ViewModelScoped
-    abstract fun provideTvShowUseCase(tvShowInteractor: TvShowInteractor): TvShowUseCase
+    abstract fun bindsTvShowUseCase(tvShowInteractor: TvShowInteractor): TvShowUseCase
 
     @Binds
     @ViewModelScoped
-    abstract fun provideDetailUseCase(detailInteractor: DetailInteractor): DetailUseCase
+    abstract fun bindsDetailUseCase(detailInteractor: DetailInteractor): DetailUseCase
 
     @Binds
     @ViewModelScoped
-    abstract fun provideFavoriteUseCase(favoriteInteractor: FavoriteInteractor): FavoriteUseCase
+    abstract fun bindsFavoriteUseCase(favoriteInteractor: FavoriteInteractor): FavoriteUseCase
 }

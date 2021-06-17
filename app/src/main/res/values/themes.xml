@@ -10,13 +10,12 @@
         <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@android:color/white</item>
-
         <item name="background">@color/foreground</item>
         <item name="android:windowBackground">@color/foreground</item>
 
         <item name="fontFamily">@font/open_sans</item>
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
     </style>
 
 
@@ -82,14 +81,11 @@
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
-
-    <style name="SmallChip" parent="@style/Widget.MaterialComponents.Chip.Action">
-        <item name="chipMinHeight">20dp</item>
-        <item name="chipCornerRadius">4dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textSize">@dimen/font_smaller</item>
+    <style name="TransparentText">
+        <item name="android:textColor">#00000000</item>
     </style>
+
+
 
     <style name="MyRatingBar" parent="Widget.AppCompat.RatingBar.Small">
         <item name="android:colorControlHighlight">#E4BB24</item>
@@ -104,11 +100,14 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="TextView.Subtitle" parent="TextView">
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+
     <style name="Headline" parent="TextView">
         <item name="android:textSize">@dimen/font_large</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="fontFamily">@font/poppins</item>
-        <item name="fontWeight">700</item>
         <item name="autoSizeTextType">uniform</item>
         <item name="autoSizePresetSizes">@array/autosize_text_sizes</item>
     </style>
@@ -120,6 +119,11 @@
     <style name="Button.Block" parent="Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textColorHint">@color/secondaryTextColor</item>
     </style>
 
 </resources>

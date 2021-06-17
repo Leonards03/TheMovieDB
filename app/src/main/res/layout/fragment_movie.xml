@@ -1,111 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".movie.MovieFragment">
+    tools:context=".home.movie.MovieFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_discover_movie"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_row_layout" />
 
-        <LinearLayout
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="visible">
+    <include
+        android:id="@+id/state_loading"
+        layout="@layout/state_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
-            <include
-                android:id="@+id/header_now_playing"
-                layout="@layout/header_layout" />
+    <include
+        android:id="@+id/no_connection_state"
+        layout="@layout/state_no_connection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_now_playing"
-                style="@style/HorizontalRecyclerView"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_movie"
-                tools:orientation="horizontal" />
-
-            <include
-                android:id="@+id/header_discover"
-                layout="@layout/header_layout" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_discover_movie"
-                style="@style/HorizontalRecyclerView"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_movie"
-                tools:orientation="horizontal" />
-
-            <include
-                android:id="@+id/header_upcoming"
-                layout="@layout/header_layout" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_upcoming"
-                style="@style/HorizontalRecyclerView"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_movie"
-                tools:orientation="horizontal" />
-
-
-            <include
-                android:id="@+id/header_toprated"
-                layout="@layout/header_layout" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_toprated"
-                style="@style/HorizontalRecyclerView"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_movie"
-                tools:orientation="horizontal" />
-
-
-            <include
-                android:id="@+id/header_popular"
-                layout="@layout/header_layout" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_popular"
-                style="@style/HorizontalRecyclerView"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_movie"
-                tools:orientation="horizontal" />
-
-        </LinearLayout>
-
-        <!--        <ProgressBar-->
-        <!--            android:id="@+id/progress_bar"-->
-        <!--            style="@style/Widget.AppCompat.ProgressBar"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:visibility="invisible"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent" />-->
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/loading"
-            app:lottie_loop="true" />
-
-        <include
-            android:id="@+id/no_connection_state"
-            layout="@layout/no_connection_state"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.core.widget.NestedScrollView>
+</FrameLayout>

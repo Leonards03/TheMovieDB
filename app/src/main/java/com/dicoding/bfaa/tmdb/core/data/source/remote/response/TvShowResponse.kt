@@ -29,6 +29,4 @@ class TvShowResponse(
     val numberOfSeasons: Int,
     @SerializedName("status")
     val status: String,
-    @SerializedName("popularity")
-    val popularity: Number
 )

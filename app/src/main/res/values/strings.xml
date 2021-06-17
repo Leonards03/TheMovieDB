@@ -5,18 +5,17 @@
     <string name="nav_movie">Movie</string>
     <string name="nav_tv_show">Tv Show</string>
     <string name="nav_favorite">Favorite</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_now_playing">Now Playing</string>
     <string name="title_discover_movie">Discover</string>
     <string name="title_upcoming_movie">Upcoming Movies</string>
     <string name="title_top_rated_movie">Top Rated Movies</string>
     <string name="title_popular_movie">Popular Movie</string>
-    <string name="search_title">search</string>
-    <string name="search_hint">Write the keywords i.e title</string>
     <string name="title_now_airing">Now Airing</string>
     <string name="title_popular_tv">Popular Shows</string>
     <string name="add_to_my_list">Add to My List</string>
+    <string name="remove_from_my_list">Remove From My List</string>
+    <string name="added_to_my_list">%s added to My List</string>
+    <string name="removed_from_my_list">%s removed from My List</string>
     <string name="view_all">View All</string>
     <string name="no_connection">No Connection!</string>
     <string name="retry">Retry</string>
@@ -24,4 +23,24 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="genre">Genre</string>
+    <string name="runtime">%d min</string>
+    <string name="airing_date">Airing Date</string>
+    <string name="airing_date_format">%s - %s</string>
+    <string name="status">Status</string>
+    <string name="episode">Episode</string>
+    <string name="season">Season</string>
+    <string name="directed_by">Directed by</string>
+    <string name="release_date">Release Date</string>
+    <string name="rating">Rating</string>
+    <string name="description_poster">Image Poster</string>
+    <string name="description_backdrop">Image Backdrop</string>
+    <string name="duration">Duration</string>
+    <string name="title_empty">There is nothing here!</string>
+    <string name="subtitle_empty">Find your favorite item, and add it to the favorite. The items will appears here.</string>
+    <string name="summary">Summary</string>
+
+    <string-array name="search_items">
+        <item>Movie</item>
+        <item>Tv Show</item>
+    </string-array>
 </resources>

@@ -1,16 +1,14 @@
 package com.dicoding.bfaa.tmdb
 
 import android.app.Application
-import android.os.Build
 import dagger.hilt.android.HiltAndroidApp
-import leakcanary.LeakCanary
 import timber.log.Timber
 
 @HiltAndroidApp
-class BaseApplication : Application(){
+class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        if(BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG)
             Timber.plant(Timber.DebugTree())
     }
 }

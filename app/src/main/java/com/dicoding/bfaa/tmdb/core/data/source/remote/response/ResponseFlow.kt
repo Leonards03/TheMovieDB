@@ -25,5 +25,5 @@ abstract class ResponseFlow<ResultType> {
 
     protected abstract suspend fun responseCall(): ResultType
 
-    fun asFlow(): Flow<Response<ResultType>> = result
+    val flow: Flow<Response<ResultType>> = result
 }

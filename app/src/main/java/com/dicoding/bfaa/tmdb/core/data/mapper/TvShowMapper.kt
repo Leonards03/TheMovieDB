@@ -13,14 +13,13 @@ fun TvShowResponse.mapToDomain(): TvShow =
         poster = valueOrEmpty(poster),
         overview = overview,
         genres = mapGenreList(genres),
-        voteAverage = voteAverage,
+        voteAverage = voteAverage.toDouble(),
         voteCount = voteCount,
         numberOfEpisodes = numberOfEpisodes,
         firstAirDate = valueOrEmpty(firstAirDate),
         lastAirDate = valueOrEmpty(lastAirDate),
         numberOfSeasons = numberOfSeasons,
-        status = valueOrEmpty(status),
-        popularity = popularity
+        status = valueOrEmpty(status)
     )
 
 fun List<TvShowResponse>.mapToDomain(): List<TvShow> =
@@ -42,8 +41,7 @@ fun TvShowEntity.mapToDomain(): TvShow =
         firstAirDate = valueOrEmpty(firstAirDate),
         lastAirDate = valueOrEmpty(lastAirDate),
         numberOfSeasons = numberOfSeasons,
-        status = valueOrEmpty(status),
-        popularity = popularity
+        status = valueOrEmpty(status)
     )
 
 @JvmName("mapToDomainTvShowEntity")
@@ -60,12 +58,11 @@ fun TvShow.mapToEntity(): TvShowEntity =
         poster = valueOrEmpty(poster),
         overview = overview,
         genres = genres,
-        voteAverage = voteAverage.toDouble(),
+        voteAverage = voteAverage,
         voteCount = voteCount,
         numberOfEpisodes = numberOfEpisodes,
         firstAirDate = valueOrEmpty(firstAirDate),
         lastAirDate = valueOrEmpty(lastAirDate),
         numberOfSeasons = numberOfSeasons,
         status = valueOrEmpty(status),
-        popularity = popularity.toDouble()
     )

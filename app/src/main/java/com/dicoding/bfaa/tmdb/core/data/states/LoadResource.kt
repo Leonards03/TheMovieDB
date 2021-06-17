@@ -1,12 +1,8 @@
 package com.dicoding.bfaa.tmdb.core.data.states
 
 import com.dicoding.bfaa.tmdb.core.data.source.remote.response.Response
-import com.dicoding.bfaa.tmdb.core.extension.messageOrToString
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import timber.log.Timber
 
 abstract class LoadResource<ResultType, RequestType>(
@@ -14,7 +10,7 @@ abstract class LoadResource<ResultType, RequestType>(
 ) {
     private var result: Flow<Resource<ResultType>> = flow {
         emit(Resource.Loading())
-        val dbSource = loadFromDB().first()
+        val dbSource = loadFromDB().firstOrNull()
         if (shouldFetch(dbSource)) {
             when (val response = createCall().first()) {
                 is Response.Success -> {
@@ -22,18 +18,18 @@ abstract class LoadResource<ResultType, RequestType>(
                     emit(Resource.Success(result))
                 }
                 is Response.Empty -> {
-                    emit(Resource.Error("The requested data is empty!"))
+                    emit(Resource.Error(Exception("The requested data is empty!")))
                 }
                 is Response.Error -> {
                     onFetchFailed(response.exception)
-                    emit(Resource.Error(response.exception.messageOrToString()))
+                    emit(Resource.Error(response.exception))
                 }
             }
         } else {
             if (dbSource != null) {
                 emit(Resource.Success(dbSource, Source.Database))
             } else {
-                emit(Resource.Error("Data is null"))
+                emit(Resource.Error(Exception("Data is null")))
             }
         }
     }.flowOn(coroutineDispatcher)
@@ -52,9 +48,7 @@ abstract class LoadResource<ResultType, RequestType>(
 
     protected abstract suspend fun createCall(): Flow<Response<RequestType>>
 
-    protected open fun saveCallResult(data: RequestType) {}
-
     protected abstract fun mapRequestToResult(data: RequestType): ResultType
 
-    fun asFlow(): Flow<Resource<ResultType>> = result
+    val flow: Flow<Resource<ResultType>> = result
 }

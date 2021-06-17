@@ -5,7 +5,6 @@ import com.dicoding.bfaa.tmdb.core.data.source.local.dao.TMDBDao
 import com.dicoding.bfaa.tmdb.core.data.source.local.entity.MovieEntity
 import com.dicoding.bfaa.tmdb.core.data.source.local.entity.TvShowEntity
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,7 +22,7 @@ class LocalDataSource @Inject constructor(
 
     fun getFavoriteTvShow(id: Int) =
         tmdbDao.getFavoriteTvShow(id)
-            .map { it?.mapToDomain()}
+            .map { it?.mapToDomain() }
 
     suspend fun addToFavorite(movie: MovieEntity) = tmdbDao.addToFavorite(movie)
 

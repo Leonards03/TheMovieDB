@@ -1,5 +1,8 @@
 package com.dicoding.bfaa.tmdb.core.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import com.dicoding.bfaa.tmdb.core.data.Constants.DEFAULT_PAGE_SIZE
 import com.dicoding.bfaa.tmdb.core.data.mapper.mapToDomain
 import com.dicoding.bfaa.tmdb.core.data.mapper.mapToEntity
 import com.dicoding.bfaa.tmdb.core.data.source.local.LocalDataSource
@@ -12,6 +15,8 @@ import com.dicoding.bfaa.tmdb.core.di.IoDispatcher
 import com.dicoding.bfaa.tmdb.core.domain.model.Movie
 import com.dicoding.bfaa.tmdb.core.domain.model.TvShow
 import com.dicoding.bfaa.tmdb.core.domain.repository.Repository
+import com.dicoding.bfaa.tmdb.core.presentation.paging.MoviePagingSource
+import com.dicoding.bfaa.tmdb.core.presentation.paging.TvShowPagingSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -27,55 +32,20 @@ class RepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     @IoDispatcher
-    private val ioDispatcher: CoroutineDispatcher,
+    private val dispatcher: CoroutineDispatcher,
 ) : Repository {
-    override fun fetchDiscoverMovieList() =
-        object : LoadResource<List<Movie>, List<MovieResponse>>(ioDispatcher) {
-            override suspend fun createCall(): Flow<Response<List<MovieResponse>>> =
-                remoteDataSource.getDiscoverMovieList()
+    override fun fetchMovies() = Pager(
+        config = DEFAULT_PAGING_CONFIG,
+        pagingSourceFactory = { MoviePagingSource(remoteDataSource) }
+    ).flow
 
-            override fun mapRequestToResult(data: List<MovieResponse>): List<Movie> =
-                data.mapToDomain()
-        }.asFlow()
-
-    override fun fetchNowPlayingMovies() =
-        object : LoadResource<List<Movie>, List<MovieResponse>>(ioDispatcher) {
-            override suspend fun createCall(): Flow<Response<List<MovieResponse>>> =
-                remoteDataSource.getNowPlayingMovies()
-
-            override fun mapRequestToResult(data: List<MovieResponse>): List<Movie> =
-                data.mapToDomain()
-        }.asFlow()
-
-    override fun fetchUpcomingMovies() =
-        object : LoadResource<List<Movie>, List<MovieResponse>>(ioDispatcher) {
-            override suspend fun createCall(): Flow<Response<List<MovieResponse>>> =
-                remoteDataSource.getUpcomingMovies()
-
-            override fun mapRequestToResult(data: List<MovieResponse>): List<Movie> =
-                data.mapToDomain()
-        }.asFlow()
-
-    override fun fetchPopularMovies() =
-        object : LoadResource<List<Movie>, List<MovieResponse>>(ioDispatcher) {
-            override suspend fun createCall(): Flow<Response<List<MovieResponse>>> =
-                remoteDataSource.getPopularMovies()
-
-            override fun mapRequestToResult(data: List<MovieResponse>): List<Movie> =
-                data.mapToDomain()
-        }.asFlow()
-
-    override fun fetchTopRatedMovie() =
-        object : LoadResource<List<Movie>, List<MovieResponse>>(ioDispatcher) {
-            override suspend fun createCall(): Flow<Response<List<MovieResponse>>> =
-                remoteDataSource.getTopRatedMovies()
-
-            override fun mapRequestToResult(data: List<MovieResponse>): List<Movie> =
-                data.mapToDomain()
-        }.asFlow()
+    override fun fetchTvShows() = Pager(
+        config = DEFAULT_PAGING_CONFIG,
+        pagingSourceFactory = { TvShowPagingSource(remoteDataSource) }
+    ).flow
 
     override fun fetchMovie(id: Int) =
-        object : LoadResource<Movie, MovieResponse>(ioDispatcher) {
+        object : LoadResource<Movie, MovieResponse>(dispatcher) {
             override fun shouldFetch(data: Movie?): Boolean =
                 data == null
 
@@ -87,47 +57,10 @@ class RepositoryImpl @Inject constructor(
 
             override fun mapRequestToResult(data: MovieResponse): Movie =
                 data.mapToDomain()
-        }.asFlow()
-
-    override fun fetchDiscoverTvList() =
-        object : LoadResource<List<TvShow>, List<TvShowResponse>>(ioDispatcher) {
-            override suspend fun createCall(): Flow<Response<List<TvShowResponse>>> =
-                remoteDataSource.getDiscoverTvList()
-
-            override fun mapRequestToResult(data: List<TvShowResponse>): List<TvShow> =
-                data.mapToDomain()
-        }.asFlow()
-
-    override fun fetchAiringToday() =
-        object : LoadResource<List<TvShow>, List<TvShowResponse>>(ioDispatcher) {
-            override suspend fun createCall(): Flow<Response<List<TvShowResponse>>> =
-                remoteDataSource.getAiringToday()
-                    .flowOn(ioDispatcher)
-
-            override fun mapRequestToResult(data: List<TvShowResponse>): List<TvShow> =
-                data.mapToDomain()
-        }.asFlow()
-
-    override fun fetchLatestTvShow() =
-        object : LoadResource<List<TvShow>, List<TvShowResponse>>(ioDispatcher) {
-            override suspend fun createCall(): Flow<Response<List<TvShowResponse>>> =
-                remoteDataSource.getLatestTvShow()
-
-            override fun mapRequestToResult(data: List<TvShowResponse>): List<TvShow> =
-                data.mapToDomain()
-        }.asFlow()
-
-    override fun fetchPopularTvShow() =
-        object : LoadResource<List<TvShow>, List<TvShowResponse>>(ioDispatcher) {
-            override suspend fun createCall(): Flow<Response<List<TvShowResponse>>> =
-                remoteDataSource.getPopularTvShow()
-
-            override fun mapRequestToResult(data: List<TvShowResponse>): List<TvShow> =
-                data.mapToDomain()
-        }.asFlow()
+        }.flow
 
     override fun fetchTvShow(id: Int) =
-        object : LoadResource<TvShow, TvShowResponse>(ioDispatcher) {
+        object : LoadResource<TvShow, TvShowResponse>(dispatcher) {
             override fun shouldFetch(data: TvShow?): Boolean =
                 data == null
 
@@ -139,20 +72,22 @@ class RepositoryImpl @Inject constructor(
 
             override fun mapRequestToResult(data: TvShowResponse): TvShow =
                 data.mapToDomain()
-        }.asFlow()
+        }.flow
 
     override fun getFavoriteMovies() =
         localDataSource.getFavoriteMovies()
             .distinctUntilChanged()
-            .flowOn(ioDispatcher)
+            .flowOn(dispatcher)
             .map { it.mapToDomain() }
 
-    fun getFavoriteTvShows() =
+    override fun getFavoriteTvShows() =
         localDataSource.getFavoriteTvShows()
+            .distinctUntilChanged()
+            .flowOn(dispatcher)
             .map { it.mapToDomain() }
 
     override fun setFavorite(movie: Movie, itemIsFavorite: Boolean) {
-        CoroutineScope(ioDispatcher).launch {
+        CoroutineScope(dispatcher).launch {
             val entity = movie.mapToEntity()
             if (itemIsFavorite) {
                 localDataSource.addToFavorite(entity)
@@ -160,5 +95,24 @@ class RepositoryImpl @Inject constructor(
                 localDataSource.removeFromFavorite(entity)
             }
         }
+    }
+
+    override fun setFavorite(tvShow: TvShow, itemIsFavorite: Boolean) {
+        CoroutineScope(dispatcher).launch {
+            val entity = tvShow.mapToEntity()
+            if (itemIsFavorite) {
+                localDataSource.addToFavorite(entity)
+            } else {
+                localDataSource.removeFromFavorite(entity)
+            }
+        }
+    }
+
+    companion object {
+        val DEFAULT_PAGING_CONFIG = PagingConfig(
+            pageSize = DEFAULT_PAGE_SIZE,
+            enablePlaceholders = false,
+            prefetchDistance = DEFAULT_PAGE_SIZE
+        )
     }
 }

@@ -7,12 +7,11 @@ data class TvShow(
     val poster: String,
     val overview: String,
     val genres: String,
-    val voteAverage: Number,
+    val voteAverage: Double,
     val voteCount: Int,
     val numberOfEpisodes: Int,
     val firstAirDate: String,
     val lastAirDate: String,
     val numberOfSeasons: Int,
     val status: String,
-    val popularity: Number
 )

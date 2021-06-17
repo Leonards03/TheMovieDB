@@ -20,15 +20,14 @@ interface TMDBDao {
     fun getFavoriteTvShow(id: Int): Flow<TvShowEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addToFavorite(movie: MovieEntity)
+    suspend fun addToFavorite(movie: MovieEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addToFavorite(tvShow: TvShowEntity)
+    suspend fun addToFavorite(tvShow: TvShowEntity): Long
 
     @Delete
-    fun removeFromFavorite(movie: MovieEntity)
+    suspend fun removeFromFavorite(movie: MovieEntity): Int
 
     @Delete
-    fun removeFromFavorite(tvShow: TvShowEntity)
-
+    suspend fun removeFromFavorite(tvShow: TvShowEntity): Int
 }

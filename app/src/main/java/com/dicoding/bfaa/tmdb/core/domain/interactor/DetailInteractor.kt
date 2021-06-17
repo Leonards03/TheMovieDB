@@ -13,8 +13,5 @@ class DetailInteractor @Inject constructor(
     override fun getTvShowDetails(id: Int) = repository.fetchTvShow(id)
 
     override fun setFavorite(movie: Movie, state: Boolean) = repository.setFavorite(movie, state)
-
-    override fun setFavorite(tvShow: TvShow, state: Boolean) {
-
-    }
+    override fun setFavorite(tvShow: TvShow, state: Boolean) = repository.setFavorite(tvShow, state)
 }

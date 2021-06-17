@@ -1,12 +1,9 @@
 package com.dicoding.bfaa.tmdb.core.di
 
 import com.dicoding.bfaa.tmdb.BuildConfig
+import com.dicoding.bfaa.tmdb.core.data.Constants.BASE_URL
 import com.dicoding.bfaa.tmdb.core.data.source.remote.network.RemoteInterceptor
 import com.dicoding.bfaa.tmdb.core.data.source.remote.network.TMDBServices
-import com.dicoding.bfaa.tmdb.core.data.source.remote.RemoteDataSource
-import com.dicoding.bfaa.tmdb.core.data.Constants.BASE_URL
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +12,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

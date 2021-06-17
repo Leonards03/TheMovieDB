@@ -45,7 +45,4 @@ data class TvShowEntity(
 
     @ColumnInfo(name = "status")
     val status: String,
-
-    @ColumnInfo(name = "popularity")
-    val popularity: Double,
 )
