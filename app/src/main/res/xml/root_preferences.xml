@@ -1,0 +1,13 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/header_preferences">
+        <ListPreference
+            app:defaultValue="Medium"
+            app:entries="@array/image_sizes"
+            app:entryValues="@array/image_values"
+            app:key="image_size"
+            app:title="Image Download Size"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

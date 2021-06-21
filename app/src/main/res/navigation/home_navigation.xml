@@ -7,17 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_movie"
-        android:name="com.dicoding.bfaa.tmdb.home.movie.MovieFragment"
+        android:name="com.dicoding.tmdb.app.home.movie.MovieFragment"
         android:label="@string/nav_movie"
         tools:layout="@layout/fragment_movie" />
+
     <fragment
         android:id="@+id/navigation_tv_show"
-        android:name="com.dicoding.bfaa.tmdb.home.tvshow.TvShowFragment"
+        android:name="com.dicoding.tmdb.app.home.tvshow.TvShowFragment"
         android:label="@string/nav_tv_show"
         tools:layout="@layout/fragment_tv_show" />
+
     <fragment
         android:id="@+id/navigation_favorite"
-        android:name="com.dicoding.bfaa.tmdb.home.favorite.FavoriteFragment"
+        android:name="com.dicoding.tmdb.favorite.presentation.favorite.FavoriteFragment"
         android:label="@string/nav_favorite"
+        app:moduleName="The_Movie_DB.favorite"
         tools:layout="@layout/fragment_favorite" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.dicoding.tmdb.app.home.settings.SettingsFragment"
+        android:label="@string/nav_settings" />
 </navigation>

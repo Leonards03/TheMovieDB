@@ -3,14 +3,15 @@ package com.dicoding.bfaa.tmdb.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
-import com.dicoding.bfaa.tmdb.core.data.mapper.mapToDomain
-import com.dicoding.bfaa.tmdb.core.data.states.ItemType
-import com.dicoding.bfaa.tmdb.core.data.states.Resource
-import com.dicoding.bfaa.tmdb.core.domain.model.Movie
-import com.dicoding.bfaa.tmdb.core.domain.model.TvShow
-import com.dicoding.bfaa.tmdb.core.domain.usecase.DetailUseCase
 import com.dicoding.bfaa.tmdb.utils.DummyDataGenerator
 import com.dicoding.bfaa.tmdb.utils.TestCoroutineRule
+import com.dicoding.tmdb.app.detail.DetailViewModel
+import com.dicoding.tmdb.core.data.mapper.mapToDomain
+import com.dicoding.tmdb.core.data.states.ItemType
+import com.dicoding.tmdb.core.data.states.Resource
+import com.dicoding.tmdb.core.domain.model.Movie
+import com.dicoding.tmdb.core.domain.model.TvShow
+import com.dicoding.tmdb.core.domain.usecase.DetailUseCase
 import io.kotest.assertions.asClue
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -42,7 +43,7 @@ class DetailViewModelTest {
     private lateinit var favoriteObserver: Observer<Boolean>
 
     @Before
-    fun setUp(){
+    fun setUp() {
         MockKAnnotations.init(this)
 
         every { savedStateHandle.get<Int>(DetailViewModel.EXTRA_ID) } returns 0

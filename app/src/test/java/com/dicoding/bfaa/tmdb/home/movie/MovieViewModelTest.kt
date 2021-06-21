@@ -3,11 +3,12 @@ package com.dicoding.bfaa.tmdb.home.movie
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
 import app.cash.turbine.test
-import com.dicoding.bfaa.tmdb.core.domain.model.Movie
-import com.dicoding.bfaa.tmdb.core.domain.usecase.MovieUseCase
 import com.dicoding.bfaa.tmdb.utils.DummyDataGenerator
 import com.dicoding.bfaa.tmdb.utils.TestCoroutineRule
 import com.dicoding.bfaa.tmdb.utils.collectDataForTest
+import com.dicoding.tmdb.app.home.movie.MovieViewModel
+import com.dicoding.tmdb.core.domain.model.Movie
+import com.dicoding.tmdb.core.domain.usecase.MovieUseCase
 import io.kotest.assertions.asClue
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe

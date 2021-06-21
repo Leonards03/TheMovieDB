@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.TheMovieDB" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
@@ -37,7 +37,7 @@
 
     <style name="ThemeOverlay.App.Toolbar" parent="">
         <item name="colorPrimary">@android:color/white</item>
-        <!--        <item name="colorPrimaryVariant">@color/shrine_pink_300</item>-->
+        <item name="android:textColorPrimary">@color/primaryColor</item>
         <item name="colorOnPrimary">@android:color/black</item>
     </style>
 
@@ -86,7 +86,6 @@
     </style>
 
 
-
     <style name="MyRatingBar" parent="Widget.AppCompat.RatingBar.Small">
         <item name="android:colorControlHighlight">#E4BB24</item>
         <item name="android:isIndicator">true</item>
@@ -125,5 +124,14 @@
         <item name="android:textColor">@color/secondaryTextColor</item>
         <item name="android:textColorHint">@color/secondaryTextColor</item>
     </style>
+
+    <style name="Theme.TheMovieDB.NoActionBar.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.TheMovieDB.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.TheMovieDB.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

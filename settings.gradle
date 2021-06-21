@@ -1,2 +1,4 @@
 include ':app'
 rootProject.name = "The Movie DB"
+include ':core'
+include ':favorite'
