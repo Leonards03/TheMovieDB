@@ -11,7 +11,7 @@ jobs:
   build:  
     # These next lines define the Android machine image executor: https://circleci.com/docs/2.0/executor-types/
     executor:
-      name: android/android-machine
+      name: android/android
 
     steps:
       # Checkout the code as the first step.
