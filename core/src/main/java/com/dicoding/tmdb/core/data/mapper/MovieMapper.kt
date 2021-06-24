@@ -8,7 +8,7 @@ import com.dicoding.tmdb.core.domain.model.Movie
 
 fun MovieResponse.mapToDomain(): Movie =
     Movie(
-        id = id,
+        movieId = id,
         title = title,
         backdrop = valueOrEmpty(backdrop),
         poster = valueOrEmpty(poster),
@@ -40,7 +40,7 @@ fun Movie.mapToEntity() =
 
 fun MovieEntity.mapToDomain() =
     Movie(
-        id = id,
+        movieId = id,
         title = title,
         backdrop = backdrop,
         poster = poster,

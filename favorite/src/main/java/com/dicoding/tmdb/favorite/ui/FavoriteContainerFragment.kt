@@ -1,4 +1,4 @@
-package com.dicoding.tmdb.favorite.presentation.favorite
+package com.dicoding.tmdb.favorite.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.dicoding.tmdb.app.R
-import com.dicoding.tmdb.favorite.databinding.FragmentFavoriteBinding
+import com.dicoding.tmdb.favorite.databinding.FragmentFavoriteContainerBinding
 import com.dicoding.tmdb.favorite.presentation.adapter.FavoritePagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
-class FavoriteFragment : Fragment() {
-    private var binding: FragmentFavoriteBinding? = null
+class FavoriteContainerFragment : Fragment() {
+    private var binding: FragmentFavoriteContainerBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentFavoriteBinding.inflate(layoutInflater, container, false)
+        binding = FragmentFavoriteContainerBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 

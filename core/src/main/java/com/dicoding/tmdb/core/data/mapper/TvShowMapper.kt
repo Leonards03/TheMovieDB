@@ -7,7 +7,7 @@ import com.dicoding.tmdb.core.domain.model.TvShow
 
 fun TvShowResponse.mapToDomain(): TvShow =
     TvShow(
-        id = id,
+        tvShowId = id,
         title = title,
         backdrop = valueOrEmpty(backdrop),
         poster = valueOrEmpty(poster),
@@ -28,7 +28,7 @@ fun List<TvShowResponse>.mapToDomain(): List<TvShow> =
 
 fun TvShowEntity.mapToDomain(): TvShow =
     TvShow(
-        id = id,
+        tvShowId = id,
         title = title,
         backdrop = valueOrEmpty(backdrop),
         poster = valueOrEmpty(poster),

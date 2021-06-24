@@ -5,7 +5,6 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 class RemoteInterceptor : Interceptor {
-    private val API_KEY = BuildConfig.TMDB_API_KEY
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val newUrl = request.url.newBuilder()
@@ -17,5 +16,9 @@ class RemoteInterceptor : Interceptor {
             .build()
 
         return chain.proceed(newRequest)
+    }
+
+    companion object {
+        private const val API_KEY = BuildConfig.TMDB_API_KEY
     }
 }
