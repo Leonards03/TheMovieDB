@@ -33,7 +33,7 @@ jobs:
           name: Run Build
           command: ./gradlew build
       - codecov/upload:
-          file: './coverage/coverage-result.xml'
+          file: './coverage/clover.xml'
           token: ${CODECOV_TOKEN}
       - store_artifacts:
           path: app/build/reports
