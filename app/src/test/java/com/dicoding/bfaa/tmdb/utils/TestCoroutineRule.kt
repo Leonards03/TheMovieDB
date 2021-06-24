@@ -2,7 +2,6 @@ package com.dicoding.bfaa.tmdb.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.*
 import org.junit.rules.TestWatcher
@@ -34,6 +33,4 @@ class TestCoroutineRule(
     fun runBlockingTest(testBlock: suspend TestCoroutineScope.() -> Unit) =
         testDispatcher.runBlockingTest(testBlock)
 
-    fun launch(testBlock: suspend TestCoroutineScope.() -> Unit) =
-        testCoroutineScope.launch { testBlock.invoke(testCoroutineScope) }
 }

@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.made.core.databinding.ItemRowLayoutBinding
 import com.dicoding.tmdb.core.data.states.ItemType
+import com.dicoding.tmdb.core.domain.model.DomainModel
 import com.dicoding.tmdb.core.domain.model.Movie
 import com.dicoding.tmdb.core.domain.model.TvShow
 import com.dicoding.tmdb.core.presentation.viewholder.CardViewHolder
 import com.dicoding.tmdb.core.utils.ImageSize
 
-class FavoriteAdapter<T : Any>(
+class FavoriteAdapter<T : DomainModel>(
     private val imageSize: ImageSize = ImageSize.Medium,
     private val onItemClick: (item: T) -> Unit,
 ) : RecyclerView.Adapter<CardViewHolder>() {

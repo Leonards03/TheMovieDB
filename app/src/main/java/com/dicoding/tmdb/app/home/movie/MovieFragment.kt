@@ -19,6 +19,7 @@ import com.dicoding.tmdb.app.databinding.FragmentMovieBinding
 import com.dicoding.tmdb.app.detail.DetailActivity
 import com.dicoding.tmdb.app.detail.DetailViewModel.Companion.EXTRA_ID
 import com.dicoding.tmdb.app.detail.DetailViewModel.Companion.EXTRA_TYPE
+import com.dicoding.tmdb.app.extension.intentToDetailsActivity
 import com.dicoding.tmdb.app.home.search.SearchViewModel.Companion.EXTRA_QUERY
 import com.dicoding.tmdb.app.home.search.movie.SearchMovieActivity
 import com.dicoding.tmdb.app.utils.AppPreferences
@@ -102,14 +103,6 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
             }
         }
     }
-
-    private fun intentToDetailsActivity(movie: Movie) =
-        Intent(requireActivity(), DetailActivity::class.java).run {
-            putExtra(EXTRA_ID, movie.id)
-            putExtra(EXTRA_TYPE, ItemType.Movie)
-            startActivity(this)
-        }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)

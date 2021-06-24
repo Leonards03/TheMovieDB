@@ -3,7 +3,6 @@ package com.dicoding.bfaa.tmdb.utils
 import androidx.paging.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 
 /**
  * Thanks to Stack overflow D:
@@ -19,7 +18,7 @@ suspend fun <T : Any> PagingData<T>.collectDataForTest(coroutineDispatcher: Coro
         override fun onRemoved(position: Int, count: Int) {}
     }
     val items = mutableListOf<T>()
-    val diff = object : PagingDataDiffer<T>(dcb,coroutineDispatcher) {
+    val diff = object : PagingDataDiffer<T>(dcb, coroutineDispatcher) {
         override suspend fun presentNewList(
             previousList: NullPaddedList<T>,
             newList: NullPaddedList<T>,

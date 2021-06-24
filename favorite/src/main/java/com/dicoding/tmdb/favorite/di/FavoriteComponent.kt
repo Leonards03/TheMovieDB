@@ -2,8 +2,10 @@ package com.dicoding.tmdb.favorite.di
 
 import android.content.Context
 import com.dicoding.tmdb.app.di.FavoriteModuleDependencies
-import com.dicoding.tmdb.favorite.presentation.favorite.movie.MovieFragment
-import com.dicoding.tmdb.favorite.presentation.favorite.tvshow.TvShowFragment
+import com.dicoding.tmdb.core.domain.model.DomainModel
+import com.dicoding.tmdb.favorite.presentation.fragment.BaseFavoriteFragment
+import com.dicoding.tmdb.favorite.ui.movie.MovieFragment
+import com.dicoding.tmdb.favorite.ui.tvshow.TvShowFragment
 import dagger.BindsInstance
 import dagger.Component
 

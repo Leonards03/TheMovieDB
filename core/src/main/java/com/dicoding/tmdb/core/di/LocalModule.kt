@@ -9,6 +9,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import javax.inject.Singleton
 
 @Module
@@ -16,11 +18,14 @@ import javax.inject.Singleton
 object LocalModule {
     @Singleton
     @Provides
-    fun provideDatabase(application: Application): TMDBDatabase = Room
-        .databaseBuilder(application, TMDBDatabase::class.java, DATABASE_NAME)
-        .fallbackToDestructiveMigration()
-        .build()
+    fun provideDatabase(application: Application): TMDBDatabase =
+        Room
+            .databaseBuilder(application, TMDBDatabase::class.java, DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .openHelperFactory(SupportFactory(SQLiteDatabase.getBytes("dicoding".toCharArray())))
+            .build()
 
     @Provides
     fun provideTMDBDao(database: TMDBDatabase): TMDBDao = database.tmdbDao()
+
 }

@@ -15,13 +15,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.tmdb.app.R
 import com.dicoding.tmdb.app.databinding.FragmentTvShowBinding
-import com.dicoding.tmdb.app.detail.DetailActivity
-import com.dicoding.tmdb.app.detail.DetailViewModel.Companion.EXTRA_ID
-import com.dicoding.tmdb.app.detail.DetailViewModel.Companion.EXTRA_TYPE
+import com.dicoding.tmdb.app.extension.intentToDetailsActivity
 import com.dicoding.tmdb.app.home.search.SearchViewModel.Companion.EXTRA_QUERY
 import com.dicoding.tmdb.app.home.search.tvshow.SearchTvShowActivity
 import com.dicoding.tmdb.app.utils.AppPreferences
-import com.dicoding.tmdb.core.data.states.ItemType
 import com.dicoding.tmdb.core.domain.model.TvShow
 import com.dicoding.tmdb.core.extension.invisible
 import com.dicoding.tmdb.core.extension.showSnackbar
@@ -103,16 +100,6 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
             }
         }
     }
-
-    /**
-     * Function to bind data to the target RecyclerView
-     */
-    private fun intentToDetailsActivity(tvShow: TvShow) =
-        Intent(requireActivity(), DetailActivity::class.java).run {
-            putExtra(EXTRA_ID, tvShow.id)
-            putExtra(EXTRA_TYPE, ItemType.TvShow)
-            startActivity(this)
-        }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
