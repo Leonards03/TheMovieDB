@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flow
 object DummyDataGenerator {
     private val movies = arrayListOf(
         Movie(
-            id = 337404,
+            movieId = 337404,
             title = "Cruella",
             backdrop = "/6MKr3KgOLmzOP6MSuZERO41Lpkt.jpg",
             poster = "/A0knvX7rlwTyZSKj8H5NiARb45.jpg",
@@ -25,7 +25,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 632357,
+            movieId = 632357,
             title = "The Unholy",
             backdrop = "/jw6ASGRT2gi8EjCImpGtbiJ9NQ9.jpg",
             poster = "/bShgiEQoPnWdw4LBrYT5u18JF34.jpg",
@@ -37,7 +37,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 637649,
+            movieId = 637649,
             title = "Wrath of Man",
             backdrop = "/77tui163estZrQ78NBggqDB4n2C.jpg",
             poster = "/YxopfHpsCV1oF8CZaL4M3Eodqa.jpg",
@@ -49,7 +49,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 503736,
+            movieId = 503736,
             title = "Army of the Dead",
             backdrop = "/9WlJFhOSCPnaaSmsrv0B4zA8iUb.jpg",
             poster = "/z8CExJekGrEThbpMXAmCFvvgoJR.jpg",
@@ -61,7 +61,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 460465,
+            movieId = 460465,
             title = "Mortal Kombat",
             backdrop = "/9yBVqNruk6Ykrwc32qrK2TIE5xw.jpg",
             poster = "/nkayOAUBUu4mMvyNf9iHSUiPjF1.jpg",
@@ -73,7 +73,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 399566,
+            movieId = 399566,
             title = "Godzilla vs. Kong",
             backdrop = "/inJjDhCjfhh3RtrJWBmmDqeuSYC.jpg",
             poster = "/pgqgaUx1cJb5oZQQ5v0tNARCeBp.jpg",
@@ -85,7 +85,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 578701,
+            movieId = 578701,
             title = "Those Who Wish Me Dead",
             backdrop = "/ouOojiypBE6CD1aqcHPVq7cJf2R.jpg",
             poster = "/xCEg6KowNISWvMh8GvPSxtdf9TO.jpg",
@@ -97,7 +97,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 808023,
+            movieId = 808023,
             title = "The Virtuoso",
             backdrop = "/efrdAWS63s8TTWdrI2uNdIhn1dj.jpg",
             poster = "/vXHzO26mJaOt4VO7ZFiM6No5ScT.jpg",
@@ -109,7 +109,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 635302,
+            movieId = 635302,
             title = "Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train",
             backdrop = "/xPpXYnCWfjkt3zzE0dpCNME1pXF.jpg",
             poster = "/h8Rb9gBr48ODIwYUttZNYeMWeUU.jpg",
@@ -121,7 +121,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 520763,
+            movieId = 520763,
             title = "A Quiet Place Part II",
             backdrop = "/z2UtGA1WggESspi6KOXeo66lvLx.jpg",
             poster = "/4q2hz2m8hubgvijz8Ez0T2Os2Yv.jpg",
@@ -133,7 +133,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 615457,
+            movieId = 615457,
             title = "Nobody",
             backdrop = "/6zbKgwgaaCyyBXE4Sun4oWQfQmi.jpg",
             poster = "/oBgWY00bEFeZ9N25wWVyuQddbAo.jpg",
@@ -145,7 +145,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 602734,
+            movieId = 602734,
             title = "Spiral: From the Book of Saw",
             backdrop = "/7JENyUT8ABxcvrcijDBVpdjgCY9.jpg",
             poster = "/lcyKve7nXRFgRyms9M1bndNkKOx.jpg",
@@ -157,7 +157,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 573680,
+            movieId = 573680,
             title = "The Banishing",
             backdrop = "/xrAaJAn3hqkInq5kE1AGJqIGXyT.jpg",
             poster = "/xD9mc8JCVXA8T8u4Od7qOUBuGH4.jpg",
@@ -169,7 +169,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 647302,
+            movieId = 647302,
             title = "Benny Loves You",
             backdrop = "/czHYg6LQ5926OL8wj5kC09pNR12.jpg",
             poster = "/mQ8vALvqA0z0qglG3gI6xpVcslo.jpg",
@@ -181,7 +181,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 634528,
+            movieId = 634528,
             title = "The Marksman",
             backdrop = "/5Zv5KmgZzdIvXz2KC3n0MyecSNL.jpg",
             poster = "/6vcDalR50RWa309vBH1NLmG2rjQ.jpg",
@@ -193,7 +193,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 804435,
+            movieId = 804435,
             title = "Vanquish",
             backdrop = "/mYM8x2Atv4MaLulaV0KVJWI1Djv.jpg",
             poster = "/AoWY1gkcNzabh229Icboa1Ff0BM.jpg",
@@ -205,7 +205,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 587807,
+            movieId = 587807,
             title = "Tom & Jerry",
             backdrop = "/9ns9463dwOeo1CK1JU2wirL5Yi1.jpg",
             poster = "/8XZI9QZ7Pm3fVkigWJPbrXCMzjq.jpg",
@@ -217,7 +217,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 458576,
+            movieId = 458576,
             title = "Monster Hunter",
             backdrop = "/z8TvnEVRenMSTemxYZwLGqFofgF.jpg",
             poster = "/1UCOF11QCw8kcqvce8LKOO6pimh.jpg",
@@ -229,7 +229,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 581387,
+            movieId = 581387,
             title = "Ashfall",
             backdrop = "/h9DIlghaiTxbQbt1FIwKNbQvEL.jpg",
             poster = "/zoeKREZ2IdAUnXISYCS0E6H5BVh.jpg",
@@ -241,7 +241,7 @@ object DummyDataGenerator {
             director = ""
         ),
         Movie(
-            id = 423108,
+            movieId = 423108,
             title = "The Conjuring: The Devil Made Me Do It",
             backdrop = "/qi6Edc1OPcyENecGtz8TF0DUr9e.jpg",
             poster = "/xbSuFiJbbBWCkyCCKIMfuDCA4yV.jpg",
@@ -502,7 +502,7 @@ object DummyDataGenerator {
     private val tvShow =
         arrayListOf(
             TvShow(
-                id = 63174,
+                tvShowId = 63174,
                 title = "Lucifer",
                 backdrop = "/h48Dpb7ljv8WQvVdyFWVLz64h4G.jpg",
                 poster = "/4EYPN5mVIhKLfxGruy7Dy41dTVn.jpg",
@@ -510,13 +510,12 @@ object DummyDataGenerator {
                 voteAverage = 8.5,
                 firstAirDate = "2016-01-25",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 91557,
+                tvShowId = 91557,
                 title = "Ragnarok",
                 backdrop = "/wu444tM9YBllq9UcBv5TeidO3j3.jpg",
                 poster = "/xUtOM1QO4r8w8yeE00QvBdq58N5.jpg",
@@ -524,13 +523,12 @@ object DummyDataGenerator {
                 voteAverage = 8.0,
                 firstAirDate = "2020-01-31",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 60735,
+                tvShowId = 60735,
                 title = "The Flash",
                 backdrop = "/9Jmd1OumCjaXDkpllbSGi2EpJvl.jpg",
                 poster = "/lJA2RCMfsWoskqlQhXPSLFQGXEJ.jpg",
@@ -538,13 +536,12 @@ object DummyDataGenerator {
                 voteAverage = 7.7,
                 firstAirDate = "2014-10-07",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 71712,
+                tvShowId = 71712,
                 title = "The Good Doctor",
                 backdrop = "/iDbIEpCM9nhoayUDTwqFL1iVwzb.jpg",
                 poster = "/6tfT03sGp9k4c0J3dypjrI8TSAI.jpg",
@@ -552,13 +549,12 @@ object DummyDataGenerator {
                 voteAverage = 8.6,
                 firstAirDate = "2017-09-25",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 1416,
+                tvShowId = 1416,
                 title = "Grey's Anatomy",
                 backdrop = "/edmk8xjGBsYVIf4QtLY9WMaMcXZ.jpg",
                 poster = "/clnyhPqj1SNgpAdeSS6a6fwE6Bo.jpg",
@@ -566,13 +562,12 @@ object DummyDataGenerator {
                 voteAverage = 8.2,
                 firstAirDate = "2005-03-27",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 88396,
+                tvShowId = 88396,
                 title = "The Falcon and the Winter Soldier",
                 backdrop = "/b0WmHGc8LHTdGCVzxRb3IBMur57.jpg",
                 poster = "/6kbAMLteGO8yyewYau6bJ683sw7.jpg",
@@ -580,13 +575,12 @@ object DummyDataGenerator {
                 voteAverage = 7.9,
                 firstAirDate = "2021-03-19",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 120168,
+                tvShowId = 120168,
                 title = "Who Killed Sara?",
                 backdrop = "/dYvIUzdh6TUv4IFRq8UBkX7bNNu.jpg",
                 poster = "/o7uk5ChRt3quPIv8PcvPfzyXdMw.jpg",
@@ -594,13 +588,12 @@ object DummyDataGenerator {
                 voteAverage = 7.8,
                 firstAirDate = "2021-03-24",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 95057,
+                tvShowId = 95057,
                 title = "Superman & Lois",
                 backdrop = "/pPKiIJEEcV0E1hpVcWRXyp73ZpX.jpg",
                 poster = "/vlv1gn98GqMnKHLSh0dNciqGfBl.jpg",
@@ -608,13 +601,12 @@ object DummyDataGenerator {
                 voteAverage = 8.3,
                 firstAirDate = "2021-02-23",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 95557,
+                tvShowId = 95557,
                 title = "Invincible",
                 backdrop = "/6UH52Fmau8RPsMAbQbjwN3wJSCj.jpg",
                 poster = "/yDWJYRAwMNKbIYT8ZB33qy84uzO.jpg",
@@ -622,13 +614,12 @@ object DummyDataGenerator {
                 voteAverage = 8.9,
                 firstAirDate = "2021-03-26",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 80240,
+                tvShowId = 80240,
                 title = "The Queen of Flow",
                 backdrop = "/pnyT1foDmmXTsho2DfxN2ePI8ix.jpg",
                 poster = "/fuVuDYrs8sxvEolnYr0wCSvtyTi.jpg",
@@ -636,13 +627,12 @@ object DummyDataGenerator {
                 voteAverage = 8.0,
                 firstAirDate = "2018-06-12",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 105971,
+                tvShowId = 105971,
                 title = "The Bad Batch",
                 backdrop = "/2yZ97TAUKLN8iIaLa4m48BGqBSY.jpg",
                 poster = "/WjQmEWFrOf98nT5aEfUfVYz9N2.jpg",
@@ -650,13 +640,12 @@ object DummyDataGenerator {
                 voteAverage = 8.7,
                 firstAirDate = "2021-05-04",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 69050,
+                tvShowId = 69050,
                 title = "Riverdale",
                 backdrop = "/qZtAf4Z1lazGQoYVXiHOrvLr5lI.jpg",
                 poster = "/wRbjVBdDo5qHAEOVYoMWpM58FSA.jpg",
@@ -664,13 +653,12 @@ object DummyDataGenerator {
                 voteAverage = 8.6,
                 firstAirDate = "2017-01-26",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 1399,
+                tvShowId = 1399,
                 title = "Game of Thrones",
                 backdrop = "/suopoADq0k8YZr4dQXcU6pToj6s.jpg",
                 poster = "/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg",
@@ -678,13 +666,12 @@ object DummyDataGenerator {
                 voteAverage = 8.4,
                 firstAirDate = "2011-04-17",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 62286,
+                tvShowId = 62286,
                 title = "Fear the Walking Dead",
                 backdrop = "/58PON1OrnBiX6CqEHgeWKVwrCn6.jpg",
                 poster = "/4UjiPdFKJGJYdxwRs2Rzg7EmWqr.jpg",
@@ -692,13 +679,12 @@ object DummyDataGenerator {
                 voteAverage = 7.6,
                 firstAirDate = "2015-08-23",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 93484,
+                tvShowId = 93484,
                 title = "Jupiter's Legacy",
                 backdrop = "/4YKkS95v9o9c0tBVA46xIn6M1tx.jpg",
                 poster = "/9yxep7oJdkj3Pla9TD9gKflRApY.jpg",
@@ -706,13 +692,12 @@ object DummyDataGenerator {
                 voteAverage = 7.4,
                 firstAirDate = "2021-05-07",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 69478,
+                tvShowId = 69478,
                 title = "The Handmaid's Tale",
                 backdrop = "/jXB3OoWPkojsOP2O2OoLCeAIDRS.jpg",
                 poster = "/oIkxqt6ug5zT5ZSUUyc1Iqopf02.jpg",
@@ -720,13 +705,12 @@ object DummyDataGenerator {
                 voteAverage = 8.1,
                 firstAirDate = "2017-04-26",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 1402,
+                tvShowId = 1402,
                 title = "The Walking Dead",
                 backdrop = "/uro2Khv7JxlzXtLb8tCIbRhkb9E.jpg",
                 poster = "/rqeYMLryjcawh2JeRpCVUDXYM5b.jpg",
@@ -734,13 +718,12 @@ object DummyDataGenerator {
                 voteAverage = 8.1,
                 firstAirDate = "2010-10-31",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 18165,
+                tvShowId = 18165,
                 title = "The Vampire Diaries",
                 backdrop = "/k7T9xRyzP41wBVNyNeLmh8Ch7gD.jpg",
                 poster = "/kLEha9zVVv8acGFKTX4gjvSR2Q0.jpg",
@@ -748,13 +731,12 @@ object DummyDataGenerator {
                 voteAverage = 8.3,
                 firstAirDate = "2009-09-10",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 79460,
+                tvShowId = 79460,
                 title = "Legacies",
                 backdrop = "/fRYwdeNjMqC30EhofPx5PlDpdun.jpg",
                 poster = "/qTZIgXrBKURBK1KrsT7fe3qwtl9.jpg",
@@ -762,13 +744,12 @@ object DummyDataGenerator {
                 voteAverage = 8.6,
                 firstAirDate = "2018-10-25",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
             ),
             TvShow(
-                id = 79008,
+                tvShowId = 79008,
                 title = "Luis Miguel: The Series",
                 backdrop = "/wkyzeBBKLhSg1Oqhky5yoiFF2hG.jpg",
                 poster = "/34FaY8qpjBAVysSfrJ1l7nrAQaD.jpg",
@@ -776,7 +757,6 @@ object DummyDataGenerator {
                 voteAverage = 8.0,
                 firstAirDate = "2018-04-22",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = "",
                 status = ""
@@ -794,7 +774,6 @@ object DummyDataGenerator {
                 voteAverage = 8.5,
                 firstAirDate = "2016-01-25",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -808,7 +787,6 @@ object DummyDataGenerator {
                 voteAverage = 8,
                 firstAirDate = "2020-01-31",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -822,7 +800,6 @@ object DummyDataGenerator {
                 voteAverage = 7.7,
                 firstAirDate = "2014-10-07",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -836,7 +813,6 @@ object DummyDataGenerator {
                 voteAverage = 8.6,
                 firstAirDate = "2017-09-25",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -850,7 +826,6 @@ object DummyDataGenerator {
                 voteAverage = 8.2,
                 firstAirDate = "2005-03-27",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -864,7 +839,6 @@ object DummyDataGenerator {
                 voteAverage = 7.9,
                 firstAirDate = "2021-03-19",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -878,7 +852,6 @@ object DummyDataGenerator {
                 voteAverage = 7.8,
                 firstAirDate = "2021-03-24",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -892,7 +865,6 @@ object DummyDataGenerator {
                 voteAverage = 8.3,
                 firstAirDate = "2021-02-23",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -906,7 +878,6 @@ object DummyDataGenerator {
                 voteAverage = 8.9,
                 firstAirDate = "2021-03-26",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -920,7 +891,6 @@ object DummyDataGenerator {
                 voteAverage = 8,
                 firstAirDate = "2018-06-12",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -934,7 +904,6 @@ object DummyDataGenerator {
                 voteAverage = 8.7,
                 firstAirDate = "2021-05-04",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -948,7 +917,6 @@ object DummyDataGenerator {
                 voteAverage = 8.6,
                 firstAirDate = "2017-01-26",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -962,7 +930,6 @@ object DummyDataGenerator {
                 voteAverage = 8.4,
                 firstAirDate = "2011-04-17",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -976,7 +943,6 @@ object DummyDataGenerator {
                 voteAverage = 7.6,
                 firstAirDate = "2015-08-23",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -990,7 +956,6 @@ object DummyDataGenerator {
                 voteAverage = 7.4,
                 firstAirDate = "2021-05-07",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -1004,7 +969,6 @@ object DummyDataGenerator {
                 voteAverage = 8.1,
                 firstAirDate = "2017-04-26",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -1018,7 +982,6 @@ object DummyDataGenerator {
                 voteAverage = 8.1,
                 firstAirDate = "2010-10-31",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -1032,7 +995,6 @@ object DummyDataGenerator {
                 voteAverage = 8.3,
                 firstAirDate = "2009-09-10",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -1046,7 +1008,6 @@ object DummyDataGenerator {
                 voteAverage = 8.6,
                 firstAirDate = "2018-10-25",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
@@ -1060,7 +1021,6 @@ object DummyDataGenerator {
                 voteAverage = 8,
                 firstAirDate = "2018-04-22",
                 lastAirDate = "",
-                numberOfEpisodes = 0,
                 numberOfSeasons = 0,
                 genres = emptyList(),
                 status = ""
