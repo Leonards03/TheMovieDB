@@ -18,6 +18,7 @@ import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.unmockkAll
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.junit.After
 import org.junit.Before
@@ -72,7 +73,7 @@ class MovieViewModelTest {
     fun `get MovieStream from UseCase but empty`() = testCoroutineRule.runBlockingTest {
         // Given
         // Create a dummy flow that emits PagingData from the generated data
-        val dummyFlowPagingData = flow { emit(PagingData.empty<Movie>()) }
+        val dummyFlowPagingData: Flow<PagingData<Movie>> = flow { emit(PagingData.empty()) }
         // mock return data from the movieUseCase
         every { movieUseCase.fetchMovies() } returns dummyFlowPagingData
         val expected = arrayListOf<Movie>()
