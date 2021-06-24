@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "465348241238",
+    "project_id": "tmdb-clone-fcff9",
+    "storage_bucket": "tmdb-clone-fcff9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465348241238:android:26e473be58d77ce4f418f7",
+        "android_client_info": {
+          "package_name": "com.dicoding.tmdb.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465348241238-v719dktev0b7tets1934go9keut4l7gi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDezdWQs73H2RsEU6-xoeEov12wMy9LDEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465348241238-v719dktev0b7tets1934go9keut4l7gi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
