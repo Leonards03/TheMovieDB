@@ -151,8 +151,8 @@ class DetailActivity : AppCompatActivity() {
                 viewModel.toggleFavoriteState()
                 viewModel.setFavorite(tvShow)
             }
-            viewModel.setLoadingState(false)
         }
+        viewModel.setLoadingState(false)
     }
 
     private fun handleError(exception: Exception) = Timber.e(exception)
