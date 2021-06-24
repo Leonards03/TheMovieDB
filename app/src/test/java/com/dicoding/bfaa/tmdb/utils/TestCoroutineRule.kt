@@ -2,7 +2,6 @@ package com.dicoding.bfaa.tmdb.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.*
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description

@@ -4,7 +4,6 @@
     <string name="remove_from_my_list">Remove From My List</string>
     <string name="added_to_my_list">%s added to My List</string>
     <string name="removed_from_my_list">%s removed from My List</string>
-    <string name="view_all">View All</string>
     <string name="no_connection">No Connection!</string>
     <string name="retry">Retry</string>
     <string name="genre">Genre</string>

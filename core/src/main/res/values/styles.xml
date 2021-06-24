@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <style name="MyRatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:colorControlHighlight">#E4BB24</item>
+        <item name="android:isIndicator">true</item>
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">0.5</item>
+        <item name="android:rating">4.5</item>
+    </style>
+
+    <style name="TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="TextView.Subtitle" parent="TextView">
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+
+    <style name="Headline" parent="TextView">
+        <item name="android:textSize">@dimen/font_large</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="fontFamily">@font/poppins</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizePresetSizes">@array/autosize_text_sizes</item>
+    </style>
+</resources>

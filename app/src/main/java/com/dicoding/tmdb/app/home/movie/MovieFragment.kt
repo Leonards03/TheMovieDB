@@ -16,14 +16,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.tmdb.app.R
 import com.dicoding.tmdb.app.databinding.FragmentMovieBinding
-import com.dicoding.tmdb.app.detail.DetailActivity
-import com.dicoding.tmdb.app.detail.DetailViewModel.Companion.EXTRA_ID
-import com.dicoding.tmdb.app.detail.DetailViewModel.Companion.EXTRA_TYPE
 import com.dicoding.tmdb.app.extension.intentToDetailsActivity
 import com.dicoding.tmdb.app.home.search.SearchViewModel.Companion.EXTRA_QUERY
 import com.dicoding.tmdb.app.home.search.movie.SearchMovieActivity
 import com.dicoding.tmdb.app.utils.AppPreferences
-import com.dicoding.tmdb.core.data.states.ItemType
 import com.dicoding.tmdb.core.domain.model.Movie
 import com.dicoding.tmdb.core.extension.invisible
 import com.dicoding.tmdb.core.extension.showSnackbar

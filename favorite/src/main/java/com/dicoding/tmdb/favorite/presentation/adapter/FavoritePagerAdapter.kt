@@ -3,9 +3,6 @@ package com.dicoding.tmdb.favorite.presentation.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.dicoding.tmdb.core.domain.model.Movie
-import com.dicoding.tmdb.core.domain.model.TvShow
-import com.dicoding.tmdb.favorite.presentation.fragment.BaseFavoriteFragment
 import com.dicoding.tmdb.favorite.ui.movie.MovieFragment
 import com.dicoding.tmdb.favorite.ui.tvshow.TvShowFragment
 

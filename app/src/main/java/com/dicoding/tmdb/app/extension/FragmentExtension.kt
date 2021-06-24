@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dicoding.tmdb.app.detail.DetailActivity
-import com.dicoding.tmdb.app.detail.DetailViewModel
 import com.dicoding.tmdb.app.detail.DetailViewModel.Companion.EXTRA_ID
 import com.dicoding.tmdb.app.detail.DetailViewModel.Companion.EXTRA_TYPE
 import com.dicoding.tmdb.core.domain.model.DomainModel
