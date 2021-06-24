@@ -112,8 +112,5 @@
         <item name="android:textColorHint">@color/secondaryTextColor</item>
     </style>
 
-    <style name="Theme.TheMovieDB.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.TheMovieDB.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
