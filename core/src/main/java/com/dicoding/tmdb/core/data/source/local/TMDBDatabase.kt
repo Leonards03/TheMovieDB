@@ -11,7 +11,7 @@ import com.dicoding.tmdb.core.data.source.local.entity.TvShowEntity
         MovieEntity::class,
         TvShowEntity::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 abstract class TMDBDatabase : RoomDatabase() {

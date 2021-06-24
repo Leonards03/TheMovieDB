@@ -17,8 +17,6 @@ class TvShowResponse(
     val genres: List<GenreResponse>?,
     @SerializedName("vote_average")
     val voteAverage: Number,
-    @SerializedName("number_of_episodes")
-    val numberOfEpisodes: Int,
     @SerializedName("first_air_date")
     val firstAirDate: String,
     @SerializedName("last_air_date")

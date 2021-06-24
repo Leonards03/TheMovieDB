@@ -12,7 +12,6 @@ data class TvShow(
     val overview: String,
     val genres: String,
     val voteAverage: Double,
-    val numberOfEpisodes: Int,
     val firstAirDate: String,
     val lastAirDate: String,
     val numberOfSeasons: Int,

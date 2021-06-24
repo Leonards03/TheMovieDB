@@ -28,9 +28,6 @@ data class TvShowEntity(
     @ColumnInfo(name = "vote_average")
     val voteAverage: Double,
 
-    @ColumnInfo(name = "number_of_episodes")
-    val numberOfEpisodes: Int,
-
     @ColumnInfo(name = "first_air_date")
     val firstAirDate: String,
 
