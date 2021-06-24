@@ -1,3 +1,5 @@
+# Default codecov yaml
+# ref https://docs.codecov.com/docs/codecov-yaml
 codecov:
   require_ci_to_pass: yes
 
