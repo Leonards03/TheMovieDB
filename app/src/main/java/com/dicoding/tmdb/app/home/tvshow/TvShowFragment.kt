@@ -8,7 +8,7 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,10 +34,18 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
-    private val viewModel: TvShowViewModel by viewModels()
-    private var binding: FragmentTvShowBinding? = null
+    private val viewModel: TvShowViewModel by activityViewModels()
+
+    // variable to assign binding onCreateView and release on DestroyView
+    private var _binding: FragmentTvShowBinding? = null
+
+    /**
+     *   using double bang operator to assure variable is not null
+     *   even though it is not recommended to use it,
+     *   currently im using it to avoid leak.
+     **/
+    private val binding get() = _binding!!
     private var pagingJob: Job? = null
-    private lateinit var adapter: TvShowPagedAdapter
 
     @Inject
     lateinit var appPreferences: AppPreferences
@@ -45,10 +53,10 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         setHasOptionsMenu(true)
-        binding = FragmentTvShowBinding.inflate(layoutInflater, container, false)
-        return binding?.root
+        _binding = FragmentTvShowBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,8 +67,7 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun setupRecyclerView(imageSize: ImageSize) = binding?.apply {
-        adapter = TvShowPagedAdapter(imageSize, ::intentToDetailsActivity)
+    private fun setupRecyclerView(imageSize: ImageSize) = binding.apply {
         rvDiscoverTv.apply {
             layoutManager =
                 if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -68,7 +75,7 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
                 } else {
                     LinearLayoutManager(context)
                 }
-            adapter = this@TvShowFragment.adapter
+            adapter = TvShowPagedAdapter(imageSize, ::intentToDetailsActivity)
         }
     }
 
@@ -84,14 +91,15 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private suspend fun renderTvShows(pagingData: PagingData<TvShow>) {
-        binding?.apply {
+        binding.apply {
             setLoadingState(false)
-            adapter.submitData(pagingData)
+            (binding.rvDiscoverTv.adapter as TvShowPagedAdapter)
+                .submitData(pagingData)
         }
     }
 
     private fun setLoadingState(isLoading: Boolean) {
-        binding?.apply {
+        binding.apply {
             if (isLoading) {
                 Timber.d("loading")
                 stateLoading.root.visible()
@@ -117,9 +125,7 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextSubmit(query: String?): Boolean {
         query?.let { submittedText ->
             if (submittedText.isBlank() || submittedText.isEmpty()) {
-                binding?.apply {
-                    root.showSnackbar(getString(R.string.message_query_null))
-                }
+                binding.root.showSnackbar(getString(R.string.message_query_null))
             } else {
                 Intent(requireActivity(), SearchTvShowActivity::class.java).apply {
                     putExtra(EXTRA_QUERY, submittedText)
@@ -132,8 +138,11 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean = false
 
+    /**
+     * ref https://github.com/android/architecture-components-samples/blob/main/ViewBindingSample/app/src/main/java/com/android/example/viewbindingsample/InflateFragment.kt
+     */
     override fun onDestroyView() {
+        _binding = null
         super.onDestroyView()
-        binding = null
     }
 }

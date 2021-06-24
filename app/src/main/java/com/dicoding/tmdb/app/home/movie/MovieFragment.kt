@@ -8,9 +8,8 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,10 +33,21 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
-    private val viewModel: MovieViewModel by viewModels()
-    private var binding: FragmentMovieBinding? = null
+    private val viewModel: MovieViewModel by activityViewModels()
+
+    /**
+     *  variable to assign binding onCreateView and release on DestroyView
+     *  Scoped to the lifecycle of the fragment's view (between onCreateView and onDestroyView)
+     */
+    private var _binding: FragmentMovieBinding? = null
+
+    /**
+     *   using double bang operator to assure variable is not null
+     *   even though it is not recommended to use it,
+     *   currently im using it to avoid leak.
+     **/
+    private val binding get() = _binding!!
     private var pagingJob: Job? = null
-    private lateinit var adapter: MoviePagedAdapter
 
     @Inject
     lateinit var appPreferences: AppPreferences
@@ -45,10 +55,10 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         setHasOptionsMenu(true)
-        binding = FragmentMovieBinding.inflate(layoutInflater, container, false)
-        return binding?.root
+        _binding = FragmentMovieBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,15 +69,14 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun setupRecyclerView(imageSize: ImageSize) = binding?.apply {
-        adapter = MoviePagedAdapter(imageSize, ::intentToDetailsActivity)
+    private fun setupRecyclerView(imageSize: ImageSize) = binding.apply {
         rvDiscoverMovie.apply {
             layoutManager = if (resources.configuration.orientation == ORIENTATION_LANDSCAPE) {
                 GridLayoutManager(context, 2)
             } else {
                 LinearLayoutManager(context)
             }
-            adapter = this@MovieFragment.adapter
+            adapter = MoviePagedAdapter(imageSize, ::intentToDetailsActivity)
         }
     }
 
@@ -75,22 +84,21 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
      * Setup the required observer on this Fragment
      */
     private fun loadMovies() {
+        pagingJob?.cancel()
         pagingJob = viewLifecycleOwner.lifecycleScope.launch {
             setLoadingState(true)
             viewModel.moviesStream.collectLatest(::renderMovies)
-            adapter.loadStateFlow.collectLatest { loadState ->
-                setLoadingState(loadState.refresh is LoadState.Loading)
-            }
         }
     }
 
     private suspend fun renderMovies(pagingData: PagingData<Movie>) {
         setLoadingState(false)
-        adapter.submitData(pagingData)
+        (binding.rvDiscoverMovie.adapter as MoviePagedAdapter)
+            .submitData(pagingData)
     }
 
     private fun setLoadingState(isLoading: Boolean) {
-        binding?.apply {
+        binding.apply {
             if (isLoading) {
                 Timber.d("loading")
                 stateLoading.root.visible()
@@ -117,9 +125,7 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextSubmit(query: String?): Boolean {
         query?.let { submittedText ->
             if (submittedText.isBlank() || submittedText.isEmpty()) {
-                binding?.apply {
-                    root.showSnackbar(getString(R.string.message_query_null))
-                }
+                binding.root.showSnackbar(getString(R.string.message_query_null))
             } else {
                 Intent(requireActivity(), SearchMovieActivity::class.java).apply {
                     putExtra(EXTRA_QUERY, submittedText)
@@ -132,9 +138,13 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean = false
 
+    /**
+     * ref https://github.com/android/architecture-components-samples/blob/main/ViewBindingSample/app/src/main/java/com/android/example/viewbindingsample/InflateFragment.kt
+     */
     override fun onDestroyView() {
+        pagingJob = null
+        _binding = null
         super.onDestroyView()
-        binding = null
     }
 
 }

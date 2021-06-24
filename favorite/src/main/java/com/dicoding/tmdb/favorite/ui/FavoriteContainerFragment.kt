@@ -12,20 +12,21 @@ import com.dicoding.tmdb.favorite.presentation.adapter.FavoritePagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 class FavoriteContainerFragment : Fragment() {
-    private var binding: FragmentFavoriteContainerBinding? = null
+    private var _binding: FragmentFavoriteContainerBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        binding = FragmentFavoriteContainerBinding.inflate(layoutInflater, container, false)
-        return binding?.root
+    ): View {
+        _binding = FragmentFavoriteContainerBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.apply {
-            viewPager.adapter = FavoritePagerAdapter(requireActivity())
+        _binding?.apply {
+            viewPager.adapter = FavoritePagerAdapter(this@FavoriteContainerFragment)
             TabLayoutMediator(tabs, viewPager) { tab, position ->
                 tab.text = getString(TAB_TITLES[position])
             }.attach()
@@ -34,7 +35,7 @@ class FavoriteContainerFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 
     companion object {
