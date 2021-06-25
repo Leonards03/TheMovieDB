@@ -1,6 +1,6 @@
 # The Movie DB - Dummy
 
-A Dummy app that consuming TMDB API for Dicoding's Creating Android App Expert Course Submission
+A Dummy app that consuming TMDB API for Dicoding [MADE](https://www.dicoding.com/academies/165) course submission
 
 [![Leonards03](https://circleci.com/gh/Leonards03/TheMovieDB-Dummy.svg?style=svg)](https://circleci.com/gh/Leonards03/TheMovieDB-Dummy)
 
