@@ -1,7 +1,6 @@
 package com.dicoding.tmdb.core.di
 
-import com.dicoding.tmdb.core.data.Constants.BASE_URL
-import com.dicoding.tmdb.core.data.Constants.hostname
+import com.dicoding.made.core.BuildConfig.*
 import com.dicoding.tmdb.core.data.source.remote.network.RemoteInterceptor
 import com.dicoding.tmdb.core.data.source.remote.network.TMDBServices
 import dagger.Module
@@ -20,10 +19,10 @@ object RemoteModule {
     @Provides
     fun provideCertificatePinner(): CertificatePinner =
         CertificatePinner.Builder()
-            .add(hostname, "sha256/+vqZVAzTqUP8BGkfl88yU7SQ3C8J2uNEa55B7RZjEg0=")
-            .add(hostname, "sha256/JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=")
-            .add(hostname, "sha256/++MBgDH5WGvL9Bcn5Be30cRcL0f5O+NyoXuWtQdX1aI=")
-            .add(hostname, "sha256/KwccWaCgrnaw6tsrrSO61FgLacNgG2MMLq8GE6+oP5I=")
+            .add(HOSTNAME, CERTIFICATE_1)
+            .add(HOSTNAME, CERTIFICATE_2)
+            .add(HOSTNAME, CERTIFICATE_3)
+            .add(HOSTNAME, CERTIFICATE_4)
             .build()
 
     @Provides
@@ -32,7 +31,7 @@ object RemoteModule {
             .addInterceptor(RemoteInterceptor())
             .retryOnConnectionFailure(false)
             .addInterceptor(HttpLoggingInterceptor().apply {
-                level = if (com.dicoding.made.core.BuildConfig.DEBUG)
+                level = if (DEBUG)
                     HttpLoggingInterceptor.Level.BODY
                 else
                     HttpLoggingInterceptor.Level.NONE

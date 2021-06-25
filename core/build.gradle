@@ -21,6 +21,13 @@ android {
         consumerProguardFiles "consumer-rules.pro"
 
         buildConfigField("String", "TMDB_API_KEY", '"8da39aac35e5ec9d00c0baa4763ce206"')
+        buildConfigField("String", "BASE_URL", '"https://api.themoviedb.org/3/"')
+        buildConfigField("String", "HOSTNAME", '"api.themoviedb.org"')
+        buildConfigField("String", "CERTIFICATE_1", '"sha256/+vqZVAzTqUP8BGkfl88yU7SQ3C8J2uNEa55B7RZjEg0="')
+        buildConfigField("String", "CERTIFICATE_2", '"sha256/JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA="')
+        buildConfigField("String", "CERTIFICATE_3", '"sha256/++MBgDH5WGvL9Bcn5Be30cRcL0f5O+NyoXuWtQdX1aI="')
+        buildConfigField("String", "CERTIFICATE_4", '"sha256/KwccWaCgrnaw6tsrrSO61FgLacNgG2MMLq8GE6+oP5I="')
+        buildConfigField("String", "PARAPHRASE", '"dicoding"')
     }
 
     buildTypes {
