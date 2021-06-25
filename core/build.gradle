@@ -20,7 +20,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        buildConfigField("String", "TMDB_API_KEY", '"<TMDB_API_KEY>"')
+        buildConfigField("String", "TMDB_API_KEY", '"8da39aac35e5ec9d00c0baa4763ce206"')
         buildConfigField("String", "BASE_URL", '"https://api.themoviedb.org/3/"')
         buildConfigField("String", "HOSTNAME", '"api.themoviedb.org"')
         buildConfigField("String", "CERTIFICATE_1", '"sha256/+vqZVAzTqUP8BGkfl88yU7SQ3C8J2uNEa55B7RZjEg0="')
