@@ -1,8 +1,8 @@
 package com.dicoding.tmdb.app.detail
 
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
+import com.dicoding.tmdb.app.R
+import com.dicoding.tmdb.app.utils.Event
 import com.dicoding.tmdb.core.data.states.ItemType
 import com.dicoding.tmdb.core.domain.model.Movie
 import com.dicoding.tmdb.core.domain.model.TvShow
@@ -18,14 +18,16 @@ class DetailViewModel @Inject constructor(
     private val detailUseCase: DetailUseCase,
 ) : ViewModel() {
     private val id: MutableStateFlow<Int> = MutableStateFlow(NO_ID)
-    private val _itemIsFavorite: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val _isLoading = MutableStateFlow(true)
-
     var itemType: MutableStateFlow<ItemType> = MutableStateFlow(ItemType.Movie)
 
-    val itemIsFavorite get() = _itemIsFavorite.asLiveData()
+    private val _itemIsFavorite: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val itemIsFavorite: LiveData<Boolean> = _itemIsFavorite.asLiveData()
 
-    val isLoading get() = _isLoading.asLiveData()
+    private val _snackbarText = MutableLiveData<Event<Int>>()
+    val snackBarText: LiveData<Event<Int>> = _snackbarText
+
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: LiveData<Boolean> = _isLoading.asLiveData()
 
     init {
         handle.get<Int>(EXTRA_ID)?.let {
@@ -50,7 +52,12 @@ class DetailViewModel @Inject constructor(
 
     fun toggleFavoriteState() {
         _itemIsFavorite.value = !_itemIsFavorite.value
+        _snackbarText.value = if (_itemIsFavorite.value)
+            Event(R.string.added_to_my_list)
+        else
+            Event(R.string.removed_from_my_list)
     }
+
 
     fun setLoadingState(state: Boolean) {
         _isLoading.value = state

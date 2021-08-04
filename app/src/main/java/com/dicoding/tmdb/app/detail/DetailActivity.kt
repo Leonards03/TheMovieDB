@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.tmdb.app.R
 import com.dicoding.tmdb.app.databinding.ActivityDetailBinding
 import com.dicoding.tmdb.app.utils.AppPreferences
+import com.dicoding.tmdb.app.utils.Event
 import com.dicoding.tmdb.core.data.Constants
 import com.dicoding.tmdb.core.data.states.ItemType
 import com.dicoding.tmdb.core.data.states.Resource
@@ -18,7 +19,9 @@ import com.dicoding.tmdb.core.extension.invisible
 import com.dicoding.tmdb.core.extension.showSnackbar
 import com.dicoding.tmdb.core.extension.visible
 import com.dicoding.tmdb.core.utils.ImageSize
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.observeOn
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -28,8 +31,6 @@ class DetailActivity : AppCompatActivity() {
     private val content by lazy { binding.content }
     private val viewModel: DetailViewModel by viewModels()
 
-    private var firstInitFlag = true
-
     @Inject
     lateinit var appPreferences: AppPreferences
 
@@ -37,7 +38,6 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        Timber.d(appPreferences.getImageSize().toString())
         enableBackButton()
         setupObserver()
     }
@@ -58,16 +58,14 @@ class DetailActivity : AppCompatActivity() {
         viewModel.itemIsFavorite.observe(this@DetailActivity, { itemIsFavorite ->
             val btnTextId =
                 if (itemIsFavorite) R.string.remove_from_my_list else R.string.add_to_my_list
-            val snackbarTextId =
-                if (itemIsFavorite) R.string.added_to_my_list else R.string.removed_from_my_list
-
             content.btnFavorite.text = getString(btnTextId)
-            if (firstInitFlag) {
-                firstInitFlag = false
-            } else {
-                binding.root.showSnackbar(getString(snackbarTextId, title))
-            }
         })
+        viewModel.snackBarText.observe(this, ::showSnackbar)
+    }
+
+    private fun showSnackbar(event: Event<Int>) {
+        val message = event.getContent() ?: return
+        content.root.showSnackbar(getString(message))
     }
 
     private fun renderMovieDetails(resource: Resource<Movie>) {
