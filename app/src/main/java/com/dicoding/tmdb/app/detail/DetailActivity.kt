@@ -60,12 +60,14 @@ class DetailActivity : AppCompatActivity() {
                 if (itemIsFavorite) R.string.remove_from_my_list else R.string.add_to_my_list
             content.btnFavorite.text = getString(btnTextId)
         })
-        viewModel.snackBarText.observe(this, ::showSnackbar)
+        viewModel.snackBarText.observe(this, { event ->
+            showSnackbar(event, title)
+        })
     }
 
-    private fun showSnackbar(event: Event<Int>) {
+    private fun showSnackbar(event: Event<Int>, title: String) {
         val message = event.getContent() ?: return
-        content.root.showSnackbar(getString(message))
+        content.root.showSnackbar(getString(message, title))
     }
 
     private fun renderMovieDetails(resource: Resource<Movie>) {
