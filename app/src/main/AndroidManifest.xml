@@ -21,10 +21,10 @@
             android:name=".splash.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_splash"
-            android:theme="@style/Theme.TheMovieDB.NoActionBar.Fullscreen">
+            android:theme="@style/Theme.TheMovieDB.NoActionBar.Fullscreen"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
