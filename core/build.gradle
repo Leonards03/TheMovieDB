@@ -70,6 +70,6 @@ dependencies {
     testImplementation "androidx.paging:paging-common-ktx:$paging_version"
     implementation "com.android.support.test.espresso:espresso-idling-resource:$idling_version"
     // Database Encryption
-    implementation "net.zetetic:android-database-sqlcipher:4.4.0"
+    implementation 'net.zetetic:android-database-sqlcipher:4.4.3'
     implementation "androidx.sqlite:sqlite-ktx:2.1.0"
 }

@@ -71,7 +71,7 @@ dependencies {
     /**
      * Testing
      */
-    testImplementation "app.cash.turbine:turbine:0.5.2"
+    testImplementation 'app.cash.turbine:turbine:0.6.0'
     testImplementation "io.kotest:kotest-assertions-core:$kotest_version"
     testImplementation "io.mockk:mockk:$mockk_version"
     androidTestImplementation "io.mockk:mockk-android:$mockk_version"
