@@ -30,7 +30,6 @@ android {
         }
         debug {
             minifyEnabled false
-            testCoverageEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -62,7 +61,7 @@ dependencies {
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
-    implementation 'com.google.firebase:firebase-analytics-ktx:19.0.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:19.0.1'
     implementation 'com.google.firebase:firebase-crashlytics:18.2.1'
 
     // Leak Canary
@@ -71,7 +70,7 @@ dependencies {
     /**
      * Testing
      */
-    testImplementation 'app.cash.turbine:turbine:0.6.0'
+    testImplementation 'app.cash.turbine:turbine:0.6.1'
     testImplementation "io.kotest:kotest-assertions-core:$kotest_version"
     testImplementation "io.mockk:mockk:$mockk_version"
     androidTestImplementation "io.mockk:mockk-android:$mockk_version"
