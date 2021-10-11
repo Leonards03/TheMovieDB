@@ -1,7 +1,7 @@
 package com.leonards.tmdb.app
 
 import android.app.Application
-import com.leonards.made.core.BuildConfig
+import com.leonards.tmdb.core.BuildConfig
 import com.leonards.tmdb.app.utils.ReleaseTree
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber

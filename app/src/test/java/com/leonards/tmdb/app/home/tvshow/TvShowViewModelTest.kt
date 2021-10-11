@@ -2,15 +2,25 @@ package com.leonards.tmdb.app.home.tvshow
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
+import app.cash.turbine.test
+import com.leonards.tmdb.app.utils.DummyDataGenerator
 import com.leonards.tmdb.app.utils.TestCoroutineRule
+import com.leonards.tmdb.app.utils.collectDataForTest
 import com.leonards.tmdb.core.domain.model.Movie
 import com.leonards.tmdb.core.domain.model.TvShow
 import com.leonards.tmdb.core.domain.usecase.TvShowUseCase
+import io.kotest.assertions.asClue
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.mockk.MockKAnnotations
+import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.unmockkAll
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -47,7 +57,7 @@ class TvShowViewModelTest {
 
         var itemIsAsserted = false
         viewModel.tvShowsStream.test {
-            val tvShow = expectItem().collectDataForTest(testCoroutineRule.testDispatcher)
+            val tvShow = awaitItem().collectDataForTest(testCoroutineRule.testDispatcher)
 
             tvShow.asClue {
                 it shouldNotBe null
@@ -55,7 +65,7 @@ class TvShowViewModelTest {
             }
 
             itemIsAsserted = true
-            expectComplete()
+            awaitComplete()
         }
 
         // Wait until dispatchers resolve the data
@@ -78,12 +88,12 @@ class TvShowViewModelTest {
         var itemIsAsserted = false
         viewModel.tvShowsStream.test {
             // Then
-            expectItem().collectDataForTest(testCoroutineRule.testDispatcher).asClue {
+            awaitItem().collectDataForTest(testCoroutineRule.testDispatcher).asClue {
                 it shouldNotBe null
                 it shouldBe expected
             }
             itemIsAsserted = true
-            expectComplete()
+            awaitComplete()
         }
 
         verify { tvShowUseCase.fetchTvShows() }

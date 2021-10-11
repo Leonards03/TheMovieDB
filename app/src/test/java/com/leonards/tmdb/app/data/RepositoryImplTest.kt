@@ -2,8 +2,14 @@ package com.leonards.tmdb.app.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingSource
+import app.cash.turbine.test
+import com.leonards.tmdb.app.utils.DummyDataGenerator
 import com.leonards.tmdb.app.utils.TestCoroutineRule
+import com.leonards.tmdb.core.data.Constants
+import com.leonards.tmdb.core.data.Constants.DEFAULT_PAGE_SIZE
 import com.leonards.tmdb.core.data.RepositoryImpl
+import com.leonards.tmdb.core.data.mapper.mapToDomain
+import com.leonards.tmdb.core.data.mapper.mapToEntity
 import com.leonards.tmdb.core.data.source.local.LocalDataSource
 import com.leonards.tmdb.core.data.source.local.dao.TMDBDao
 import com.leonards.tmdb.core.data.source.local.entity.MovieEntity
@@ -11,10 +17,18 @@ import com.leonards.tmdb.core.data.source.local.entity.TvShowEntity
 import com.leonards.tmdb.core.data.source.remote.RemoteDataSource
 import com.leonards.tmdb.core.data.source.remote.network.TMDBServices
 import com.leonards.tmdb.core.data.states.Resource
+import com.leonards.tmdb.core.data.states.Resource.*
 import com.leonards.tmdb.core.domain.model.Movie
 import com.leonards.tmdb.core.domain.model.TvShow
+import com.leonards.tmdb.core.presentation.paging.MoviePagingSource
+import com.leonards.tmdb.core.presentation.paging.TvShowPagingSource
+import io.kotest.assertions.asClue
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -168,11 +182,11 @@ class RepositoryImplTest {
 
         // When
         repositoryImpl.getFavoriteMovies().test {
-            expectItem().asClue {
+            awaitItem().asClue {
                 it shouldNotBe null
                 it shouldBe expected
             }
-            expectComplete()
+            awaitComplete()
         }
 
         coVerify { tmdbDao.getFavoriteMovies() }
@@ -186,11 +200,11 @@ class RepositoryImplTest {
 
         // When
         repositoryImpl.getFavoriteTvShows().test {
-            expectItem().asClue {
+            awaitItem().asClue {
                 it shouldNotBe null
                 it shouldBe expected
             }
-            expectComplete()
+            awaitComplete()
         }
 
         coVerify { tmdbDao.getFavoriteTvShows() }
@@ -211,14 +225,14 @@ class RepositoryImplTest {
         repositoryImpl.fetchMovie(movieId).test {
             // Then
             // Expect first emitted item should be a loading resource
-            expectItem() shouldBe Resource.Loading<Resource<Movie>>()
+            awaitItem() shouldBe Resource.Loading<Resource<Movie>>()
 
             // Expecting a result in the next item
-            when (val resource = expectItem()) {
-                is Resource.Error -> throw Error("Resource Error")
-                is Resource.Loading -> {
+            when (val resource = awaitItem()) {
+                is Error -> throw Error("Resource Error")
+                is Loading -> {
                 }
-                is Resource.Success -> {
+                is Success -> {
                     resource.data.asClue {
                         it shouldNotBe null
                         it shouldBe expected.mapToDomain()
@@ -227,7 +241,7 @@ class RepositoryImplTest {
                 }
             }
             // after item emitted, flow should be completed by this time
-            expectComplete()
+            awaitComplete()
         }
 
         coVerifyOrder {
@@ -249,14 +263,14 @@ class RepositoryImplTest {
         repositoryImpl.fetchMovie(movieId).test {
             // Then
             // Expect first emitted item should be a loading resource
-            expectItem() shouldBe Resource.Loading<Resource<Movie>>()
+            awaitItem() shouldBe Resource.Loading<Resource<Movie>>()
 
             // Expecting a result in the next item
-            when (val resource = expectItem()) {
-                is Resource.Error -> throw Error("Resource Error")
-                is Resource.Loading -> {
+            when (val resource: Resource<Movie> = awaitItem()) {
+                is Error -> throw Error("Resource Error")
+                is Loading -> {
                 }
-                is Resource.Success -> {
+                is Success -> {
                     resource.data.asClue {
                         it shouldNotBe null
                         it shouldBe expected.mapToDomain()
@@ -265,7 +279,7 @@ class RepositoryImplTest {
                 }
             }
             // after item emitted, flow should be completed by this time
-            expectComplete()
+            awaitComplete()
         }
 
         coVerify { tmdbDao.getFavoriteMovie(movieId) }
@@ -285,12 +299,12 @@ class RepositoryImplTest {
         repositoryImpl.fetchTvShow(tvShowId).test {
             // Then
             // Expect first emitted item should be a loading resource
-            expectItem() shouldBe Resource.Loading<Resource<TvShow>>()
-            when (val resource = expectItem()) {
-                is Resource.Error -> throw Error(resource.exception.message)
-                is Resource.Loading -> {
+            awaitItem() shouldBe Resource.Loading<Resource<TvShow>>()
+            when (val resource: Resource<TvShow> = awaitItem()) {
+                is Error -> throw Error(resource.exception.message)
+                is Loading -> {
                 }
-                is Resource.Success -> {
+                is Success -> {
                     // Then
                     resource.data.asClue {
                         it shouldNotBe null
@@ -300,7 +314,7 @@ class RepositoryImplTest {
                 }
             }
             // after item emitted, flow should be completed by this time
-            expectComplete()
+            awaitComplete()
         }
 
         coVerifyOrder {
@@ -322,14 +336,14 @@ class RepositoryImplTest {
         repositoryImpl.fetchTvShow(tvShowId).test {
             // Then
             // Expect first emitted item should be a loading resource
-            expectItem() shouldBe Resource.Loading<Resource<TvShow>>()
+            awaitItem() shouldBe Loading<Resource<TvShow>>()
 
             // Expecting a result in the next item
-            when (val resource = expectItem()) {
-                is Resource.Error -> throw Error("Resource Error")
-                is Resource.Loading -> {
+            when (val resource = awaitItem()) {
+                is Error -> throw Error("Resource Error")
+                is Loading -> {
                 }
-                is Resource.Success -> {
+                is Success -> {
                     resource.data.asClue {
                         it shouldNotBe null
                         it shouldBe expected.mapToDomain()
@@ -338,7 +352,7 @@ class RepositoryImplTest {
                 }
             }
             // after item emitted, flow should be completed by this time
-            expectComplete()
+            awaitComplete()
         }
 
         coVerify { tmdbDao.getFavoriteTvShow(tvShowId) }

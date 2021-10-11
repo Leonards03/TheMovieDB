@@ -2,14 +2,23 @@ package com.leonards.tmdb.app.home.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
+import app.cash.turbine.test
+import com.leonards.tmdb.app.utils.DummyDataGenerator
 import com.leonards.tmdb.app.utils.TestCoroutineRule
+import com.leonards.tmdb.app.utils.collectDataForTest
 import com.leonards.tmdb.core.domain.model.Movie
 import com.leonards.tmdb.core.domain.usecase.MovieUseCase
+import io.kotest.assertions.asClue
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.mockk.MockKAnnotations
+import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.unmockkAll
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -47,12 +56,12 @@ class MovieViewModelTest {
         // When
         viewModel.moviesStream.test {
             //Then
-            expectItem().collectDataForTest(testCoroutineRule.testDispatcher).asClue {
+            awaitItem().collectDataForTest(testCoroutineRule.testDispatcher).asClue {
                 it shouldNotBe null
                 it shouldBe expected
             }
             itemIsAsserted = true
-            expectComplete()
+            awaitComplete()
         }
 
         verify { movieUseCase.fetchMovies() }
@@ -71,12 +80,12 @@ class MovieViewModelTest {
         var itemIsAsserted = false
         viewModel.moviesStream.test {
             // Then
-            expectItem().collectDataForTest(testCoroutineRule.testDispatcher).asClue {
+            awaitItem().collectDataForTest(testCoroutineRule.testDispatcher).asClue {
                 it shouldNotBe null
                 it shouldBe expected
             }
             itemIsAsserted = true
-            expectComplete()
+            awaitComplete()
         }
 
         verify { movieUseCase.fetchMovies() }
