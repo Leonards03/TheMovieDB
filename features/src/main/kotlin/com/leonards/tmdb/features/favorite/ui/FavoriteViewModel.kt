@@ -1,4 +1,4 @@
-package com.leonards.tmdb.favorite.ui
+package com.leonards.tmdb.features.favorite.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData

@@ -1,9 +1,9 @@
-package com.leonards.tmdb.favorite.di
+package com.leonards.tmdb.features.favorite.di
 
 import android.content.Context
 import com.leonards.tmdb.app.di.FavoriteModuleDependencies
-import com.leonards.tmdb.favorite.ui.movie.MovieFragment
-import com.leonards.tmdb.favorite.ui.tvshow.TvShowFragment
+import com.leonards.tmdb.features.favorite.ui.movie.MovieFragment
+import com.leonards.tmdb.features.favorite.ui.tvshow.TvShowFragment
 import dagger.BindsInstance
 import dagger.Component
 

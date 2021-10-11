@@ -1,9 +1,9 @@
-package com.leonards.tmdb.favorite.presentation.factory
+package com.leonards.tmdb.features.favorite.presentation.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.leonards.tmdb.core.domain.usecase.FavoriteUseCase
-import com.leonards.tmdb.favorite.ui.FavoriteViewModel
+import com.leonards.tmdb.features.favorite.ui.FavoriteViewModel
 import javax.inject.Inject
 
 class ViewModelFactory @Inject constructor(

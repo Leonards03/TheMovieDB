@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_favorite"
-        android:name="com.leonards.tmdb.favorite.ui.FavoriteContainerFragment"
+        android:name="com.leonards.tmdb.features.favorite.ui.FavoriteContainerFragment"
         android:label="@string/nav_favorite"
         app:moduleName="The_Movie_DB.favorite"
         tools:layout="@layout/fragment_favorite" />

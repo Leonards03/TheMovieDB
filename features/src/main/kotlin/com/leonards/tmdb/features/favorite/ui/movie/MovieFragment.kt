@@ -1,10 +1,10 @@
-package com.leonards.tmdb.favorite.ui.movie
+package com.leonards.tmdb.features.favorite.ui.movie
 
 import android.content.Context
 import com.leonards.tmdb.app.di.FavoriteModuleDependencies
 import com.leonards.tmdb.core.domain.model.Movie
-import com.leonards.tmdb.favorite.di.DaggerFavoriteComponent
-import com.leonards.tmdb.favorite.presentation.fragment.BaseFavoriteFragment
+import com.leonards.tmdb.features.favorite.di.DaggerFavoriteComponent
+import com.leonards.tmdb.features.favorite.presentation.fragment.BaseFavoriteFragment
 import dagger.hilt.android.EntryPointAccessors
 
 class MovieFragment : BaseFavoriteFragment<Movie>() {

@@ -1,9 +1,9 @@
-package com.leonards.tmdb.favorite.presentation.adapter
+package com.leonards.tmdb.features.favorite.presentation.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.leonards.tmdb.favorite.ui.movie.MovieFragment
-import com.leonards.tmdb.favorite.ui.tvshow.TvShowFragment
+import com.leonards.tmdb.features.favorite.ui.movie.MovieFragment
+import com.leonards.tmdb.features.favorite.ui.tvshow.TvShowFragment
 
 class FavoritePagerAdapter(fragment: Fragment) :
     FragmentStateAdapter(fragment) {

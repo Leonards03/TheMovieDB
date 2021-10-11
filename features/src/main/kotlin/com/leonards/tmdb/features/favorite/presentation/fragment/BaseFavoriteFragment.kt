@@ -1,4 +1,4 @@
-package com.leonards.tmdb.favorite.presentation.fragment
+package com.leonards.tmdb.features.favorite.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,10 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.leonards.tmdb.app.extension.intentToDetailsActivity
 import com.leonards.tmdb.app.utils.AppPreferences
 import com.leonards.tmdb.core.domain.model.DomainModel
+import com.leonards.tmdb.core.extension.invisible
+import com.leonards.tmdb.core.extension.visible
 import com.leonards.tmdb.core.presentation.adapter.FavoriteAdapter
-import com.leonards.tmdb.favorite.databinding.FragmentFavoriteBinding
-import com.leonards.tmdb.favorite.presentation.factory.ViewModelFactory
-import com.leonards.tmdb.favorite.ui.FavoriteViewModel
+import com.leonards.tmdb.features.databinding.FragmentFavoriteBinding
+import com.leonards.tmdb.features.favorite.presentation.factory.ViewModelFactory
+import com.leonards.tmdb.features.favorite.ui.FavoriteViewModel
 import javax.inject.Inject
 
 abstract class BaseFavoriteFragment<T : DomainModel> : Fragment() {

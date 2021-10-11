@@ -1,4 +1,4 @@
-package com.leonards.tmdb.favorite.ui
+package com.leonards.tmdb.features.favorite.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.leonards.tmdb.app.R
-import com.leonards.tmdb.favorite.databinding.FragmentFavoriteContainerBinding
-import com.leonards.tmdb.favorite.presentation.adapter.FavoritePagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import com.leonards.tmdb.app.R
+import com.leonards.tmdb.features.databinding.FragmentFavoriteContainerBinding
+import com.leonards.tmdb.features.favorite.presentation.adapter.FavoritePagerAdapter
 
 class FavoriteContainerFragment : Fragment() {
     private var _binding: FragmentFavoriteContainerBinding? = null
