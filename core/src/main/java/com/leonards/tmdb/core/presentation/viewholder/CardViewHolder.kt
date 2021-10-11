@@ -1,7 +1,7 @@
 package com.leonards.tmdb.core.presentation.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
-import com.leonards.made.core.databinding.ItemRowLayoutBinding
+import com.leonards.tmdb.core.databinding.ItemRowLayoutBinding
 import com.leonards.tmdb.core.domain.model.Movie
 import com.leonards.tmdb.core.domain.model.TvShow
 import com.leonards.tmdb.core.extension.glideImageWithOptions

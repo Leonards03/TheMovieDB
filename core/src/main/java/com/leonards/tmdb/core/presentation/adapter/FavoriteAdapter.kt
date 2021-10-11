@@ -3,7 +3,7 @@ package com.leonards.tmdb.core.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.leonards.made.core.databinding.ItemRowLayoutBinding
+import com.leonards.tmdb.core.databinding.ItemRowLayoutBinding
 import com.leonards.tmdb.core.data.states.ItemType
 import com.leonards.tmdb.core.domain.model.DomainModel
 import com.leonards.tmdb.core.domain.model.Movie

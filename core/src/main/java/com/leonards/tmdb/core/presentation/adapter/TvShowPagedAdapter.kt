@@ -3,7 +3,7 @@ package com.leonards.tmdb.core.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import com.leonards.made.core.databinding.ItemRowLayoutBinding
+import com.leonards.tmdb.core.databinding.ItemRowLayoutBinding
 import com.leonards.tmdb.core.domain.model.TvShow
 import com.leonards.tmdb.core.presentation.utils.TvShowDiffCallback
 import com.leonards.tmdb.core.presentation.viewholder.CardViewHolder

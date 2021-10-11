@@ -2,7 +2,7 @@ package com.leonards.tmdb.core.di
 
 import android.app.Application
 import androidx.room.Room
-import com.leonards.made.core.BuildConfig
+import com.leonards.tmdb.core.BuildConfig
 import com.leonards.tmdb.core.data.Constants.DATABASE_NAME
 import com.leonards.tmdb.core.data.source.local.TMDBDatabase
 import com.leonards.tmdb.core.data.source.local.dao.TMDBDao

@@ -6,7 +6,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
  * Thanks to Stack overflow D:
- * I hope Dicoding update its Jetpack Course to support Paging v3 soon enough.
  * https://stackoverflow.com/questions/66503911/unit-testing-a-repository-with-paging-3-using-a-a-remote-mediator-and-paging-sou
  */
 

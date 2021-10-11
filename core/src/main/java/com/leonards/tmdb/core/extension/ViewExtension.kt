@@ -7,7 +7,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.leonards.made.core.R
+import com.leonards.tmdb.core.R
 import com.leonards.tmdb.core.data.mapper.valueOrEmpty
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable

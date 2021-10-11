@@ -1,6 +1,6 @@
 package com.leonards.tmdb.core.di
 
-import com.leonards.made.core.BuildConfig.*
+import com.leonards.tmdb.core.BuildConfig.*
 import com.leonards.tmdb.core.data.source.remote.network.RemoteInterceptor
 import com.leonards.tmdb.core.data.source.remote.network.TMDBServices
 import dagger.Module

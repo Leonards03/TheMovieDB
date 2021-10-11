@@ -1,6 +1,6 @@
 package com.leonards.tmdb.core.data.source.remote.network
 
-import com.leonards.made.core.BuildConfig.TMDB_API_KEY
+import com.leonards.tmdb.core.BuildConfig.TMDB_API_KEY
 import okhttp3.Interceptor
 import okhttp3.Response
 
