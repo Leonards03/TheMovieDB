@@ -27,6 +27,7 @@ import com.leonards.tmdb.core.presentation.adapter.TvShowPagedAdapter
 import com.leonards.tmdb.core.utils.ImageSize
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject

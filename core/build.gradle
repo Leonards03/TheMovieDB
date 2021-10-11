@@ -65,9 +65,6 @@ dependencies {
     // OkHttp Interceptor
     api "com.squareup.okhttp3:okhttp:$okhttp_version"
     api "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
-    // Paging
-    api "androidx.paging:paging-runtime-ktx:$paging_version"
-    testImplementation "androidx.paging:paging-common-ktx:$paging_version"
     implementation "com.android.support.test.espresso:espresso-idling-resource:$idling_version"
     // Database Encryption
     implementation 'net.zetetic:android-database-sqlcipher:4.4.3'

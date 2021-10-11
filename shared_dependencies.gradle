@@ -3,6 +3,10 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
     implementation "com.google.android.material:material:$material_version"
 
+    // Paging
+    api "androidx.paging:paging-runtime:$paging_version"
+    api "androidx.paging:paging-runtime-ktx:$paging_version"
+    testImplementation "androidx.paging:paging-common-ktx:$paging_version"
     // KTX Core
     implementation "androidx.core:core-ktx:$ktxcore_version"
     testImplementation "androidx.arch.core:core-testing:$androidCoreTestVersion"
