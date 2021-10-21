@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/edwin/AndroidStudioProjects/TheMovieDB-Dummy/app/src/main/res/layout/activity_home.xml" value="0.2" />
+        <entry key="..\:/Users/edwin/AndroidStudioProjects/TheMovieDB-Dummy/app/src/main/res/layout/fragment_movie.xml" value="0.2" />
+        <entry key="..\:/Users/edwin/AndroidStudioProjects/TheMovieDB-Dummy/app/src/main/res/layout/fragment_tv_show.xml" value="0.2" />
+        <entry key="..\:/Users/edwin/AndroidStudioProjects/TheMovieDB-Dummy/app/src/main/res/layout/state_loading.xml" value="0.2" />
+      </map>
+    </option>
+  </component>
   <component name="EntryPointsManager">
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="dagger.Binds" />
