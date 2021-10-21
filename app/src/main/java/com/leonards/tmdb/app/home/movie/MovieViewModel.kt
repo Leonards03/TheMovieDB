@@ -2,48 +2,77 @@ package com.leonards.tmdb.app.home.movie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.leonards.tmdb.app.state.UiState
 import com.leonards.tmdb.core.domain.model.Movie
 import com.leonards.tmdb.core.domain.usecase.MovieUseCase
+import com.leonards.tmdb.core.domain.usecase.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class MovieViewModel @Inject constructor(
     private val movieUseCase: MovieUseCase,
+    private val searchUseCase: SearchUseCase,
 ) : ViewModel() {
     val moviesStream by lazy {
         movieUseCase.fetchMovies()
             .cachedIn(viewModelScope)
     }
-    private val _uiState: MutableStateFlow<UiState<PagingData<Movie>>> = MutableStateFlow(UiState.Idle)
-    val uiState = _uiState.asStateFlow()
-    private var pagingJob: Job? = null
-
-    init {
-        _uiState.value = UiState.Loading
-        loadMovies()
+    val movieIntent = Channel<MovieIntent>(Channel.UNLIMITED)
+    private val _state = MutableStateFlow<UiState<PagingData<Movie>>>(UiState.Idle)
+    val state: StateFlow<UiState<PagingData<Movie>>>
+        get() = _state.asStateFlow()
+    val query = MutableStateFlow(String())
+    private var previousIntent: MovieIntent? = null
+    private fun handleIntent() {
+        viewModelScope.launch {
+            movieIntent.consumeAsFlow().collect { intent ->
+                previousIntent?.let { }
+                when (intent) {
+                    MovieIntent.fetchMovie -> fetchMovie()
+                    MovieIntent.searchMovie -> searchMovie()
+                }
+            }
+        }
     }
 
-    private fun loadMovies() {
-        pagingJob?.cancel()
-        _uiState.value = UiState.Loading
-        pagingJob = viewModelScope.launch {
+    init {
+        handleIntent()
+        viewModelScope.launch {
+            movieIntent.send(MovieIntent.fetchMovie)
+        }
+    }
+
+    private fun fetchMovie() {
+        _state.value = UiState.Loading
+        viewModelScope.launch {
             movieUseCase.fetchMovies()
                 .cachedIn(viewModelScope)
-                .catch { throwable ->
-                    _uiState.value = UiState.Error(throwable)
-                }
-                .collectLatest { pagingData ->
-                    _uiState.value = UiState.LoadingDone
-                    _uiState.value = UiState.Success(pagingData)
+                .collectLatest {
+                    _state.value = UiState.Success(it)
                 }
         }
     }
+
+    private fun searchMovie() {
+        _state.value = UiState.Loading
+        viewModelScope.launch {
+            query.flatMapLatest { searchUseCase.searchMovie(it) }
+                .cachedIn(viewModelScope)
+                .collectLatest {
+                    _state.value = UiState.Success(it)
+                }
+        }
+    }
+
+
+
 }

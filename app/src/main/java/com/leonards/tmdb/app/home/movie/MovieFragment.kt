@@ -1,7 +1,6 @@
 package com.leonards.tmdb.app.home.movie
 
 import android.app.SearchManager
-import android.content.Intent
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.os.Bundle
 import android.view.*
@@ -16,8 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.leonards.tmdb.app.R
 import com.leonards.tmdb.app.databinding.FragmentMovieBinding
 import com.leonards.tmdb.app.extension.intentToDetailsActivity
-import com.leonards.tmdb.app.home.search.SearchViewModel.Companion.EXTRA_QUERY
-import com.leonards.tmdb.app.home.search.movie.SearchMovieActivity
 import com.leonards.tmdb.app.state.UiState
 import com.leonards.tmdb.app.utils.AppPreferences
 import com.leonards.tmdb.core.domain.model.Movie
@@ -65,12 +62,19 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
         if (activity != null) {
             setupRecyclerView(appPreferences.getImageSize())
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.uiState.collect { uiState ->
-                    when (uiState) {
-                        is UiState.Loading -> binding.stateLoading.visible()
-                        is UiState.LoadingDone -> binding.stateLoading.invisible()
-                        is UiState.Error -> showError(uiState.throwable)
-                        is UiState.Success -> renderMovies(uiState.data)
+                viewModel.state.collect { state ->
+                    when (state) {
+                        is UiState.Error -> showError(state.throwable)
+                        UiState.Idle -> {
+                            /** Do nothing **/
+                        }
+                        UiState.Loading -> {
+                            binding.stateLoading.visible()
+                        }
+                        is UiState.Success -> {
+                            binding.stateLoading.invisible()
+                            renderMovies(state.data)
+                        }
                     }
                 }
             }
@@ -116,9 +120,9 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
             if (submittedText.isBlank() || submittedText.isEmpty()) {
                 binding.root.showSnackbar(getString(R.string.message_query_null))
             } else {
-                Intent(requireActivity(), SearchMovieActivity::class.java).apply {
-                    putExtra(EXTRA_QUERY, submittedText)
-                    startActivity(this)
+                viewModel.query.value = query
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewModel.movieIntent.send(MovieIntent.searchMovie)
                 }
             }
         }

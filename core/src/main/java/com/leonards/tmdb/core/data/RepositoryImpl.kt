@@ -2,6 +2,7 @@ package com.leonards.tmdb.core.data
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.leonards.tmdb.core.data.Constants.DEFAULT_PAGE_SIZE
 import com.leonards.tmdb.core.data.mapper.mapToDomain
 import com.leonards.tmdb.core.data.mapper.mapToEntity
@@ -34,10 +35,13 @@ class RepositoryImpl @Inject constructor(
     @IoDispatcher
     private val dispatcher: CoroutineDispatcher,
 ) : Repository {
-    override fun fetchMovies() = Pager(
-        config = DEFAULT_PAGING_CONFIG,
-        pagingSourceFactory = { MoviePagingSource(remoteDataSource) }
-    ).flow
+    override fun fetchMovies(): Flow<PagingData<Movie>> {
+
+        return Pager(
+            config = DEFAULT_PAGING_CONFIG,
+            pagingSourceFactory = { MoviePagingSource(remoteDataSource) }
+        ).flow
+    }
 
     override fun fetchTvShows() = Pager(
         config = DEFAULT_PAGING_CONFIG,
