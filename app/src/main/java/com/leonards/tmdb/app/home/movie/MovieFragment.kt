@@ -100,7 +100,6 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun setLoadingState(isLoading: Boolean) {
         binding.apply {
             if (isLoading) {
-                Timber.d("loading")
                 stateLoading.root.visible()
             } else {
                 stateLoading.root.invisible()
