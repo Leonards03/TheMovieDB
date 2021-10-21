@@ -18,6 +18,7 @@ import com.leonards.tmdb.app.databinding.FragmentMovieBinding
 import com.leonards.tmdb.app.extension.intentToDetailsActivity
 import com.leonards.tmdb.app.home.search.SearchViewModel.Companion.EXTRA_QUERY
 import com.leonards.tmdb.app.home.search.movie.SearchMovieActivity
+import com.leonards.tmdb.app.state.UiState
 import com.leonards.tmdb.app.utils.AppPreferences
 import com.leonards.tmdb.core.domain.model.Movie
 import com.leonards.tmdb.core.extension.invisible
@@ -27,8 +28,7 @@ import com.leonards.tmdb.core.presentation.adapter.MoviePagedAdapter
 import com.leonards.tmdb.core.utils.ImageSize
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collectLatest
-import timber.log.Timber
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -44,10 +44,9 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
     /**
      *   using double bang operator to assure variable is not null
      *   even though it is not recommended to use it,
-     *   currently im using it to avoid leak.
+     *   currently using it to avoid leak.
      **/
     private val binding get() = _binding!!
-    private var pagingJob: Job? = null
 
     @Inject
     lateinit var appPreferences: AppPreferences
@@ -65,7 +64,16 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
             setupRecyclerView(appPreferences.getImageSize())
-            loadMovies()
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.uiState.collect { uiState ->
+                    when (uiState) {
+                        is UiState.Loading -> binding.stateLoading.visible()
+                        is UiState.LoadingDone -> binding.stateLoading.invisible()
+                        is UiState.Error -> showError(uiState.throwable)
+                        is UiState.Success -> renderMovies(uiState.data)
+                    }
+                }
+            }
         }
     }
 
@@ -80,31 +88,13 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    /**
-     * Setup the required observer on this Fragment
-     */
-    private fun loadMovies() {
-        pagingJob?.cancel()
-        pagingJob = viewLifecycleOwner.lifecycleScope.launch {
-            setLoadingState(true)
-            viewModel.moviesStream.collectLatest(::renderMovies)
-        }
-    }
-
     private suspend fun renderMovies(pagingData: PagingData<Movie>) {
-        setLoadingState(false)
         (binding.rvDiscoverMovie.adapter as MoviePagedAdapter)
             .submitData(pagingData)
     }
 
-    private fun setLoadingState(isLoading: Boolean) {
-        binding.apply {
-            if (isLoading) {
-                stateLoading.root.visible()
-            } else {
-                stateLoading.root.invisible()
-            }
-        }
+    private fun showError(throwable: Throwable) {
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -141,7 +131,6 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
      * ref https://github.com/android/architecture-components-samples/blob/main/ViewBindingSample/app/src/main/java/com/android/example/viewbindingsample/InflateFragment.kt
      */
     override fun onDestroyView() {
-        pagingJob = null
         _binding = null
         super.onDestroyView()
     }
