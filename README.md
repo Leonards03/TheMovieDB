@@ -1,6 +1,6 @@
 # The Movie DB - Dummy
 
-A Dummy app that consuming TMDB API for Dicoding [MADE](https://www.dicoding.com/academies/165) course submission
+A Dummy app that consuming TMDB API
 
 
 ## Installation
