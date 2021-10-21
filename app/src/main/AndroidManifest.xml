@@ -18,11 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TheMovieDB.NoActionBar"
         tools:ignore="AllowBackup">
-        <activity android:name=".home.search.tvshow.SearchTvShowActivity" />
-        <activity android:name=".home.search.movie.SearchMovieActivity" />
+        <activity
+            android:name=".home.search.tvshow.SearchTvShowActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.search.movie.SearchMovieActivity"
+            android:exported="false" />
         <activity
             android:name=".splash.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
             android:label="@string/title_activity_splash"
             android:theme="@style/Theme.TheMovieDB.NoActionBar.Fullscreen">
             <intent-filter>
@@ -31,8 +36,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".home.HomeActivity" />
-        <activity android:name=".detail.DetailActivity" />
+        <activity
+            android:name=".home.HomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".detail.DetailActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
