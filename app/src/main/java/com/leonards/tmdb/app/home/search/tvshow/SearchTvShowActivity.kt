@@ -56,8 +56,7 @@ class SearchTvShowActivity : AppCompatActivity() {
     private fun loadTvShows() {
         pagingJob?.cancel()
         pagingJob = lifecycleScope.launch {
-            viewModel.searchTvShow()
-            viewModel.tvSearchResult?.collectLatest { pagingData ->
+            viewModel.tvSearchResult.collectLatest { pagingData ->
                 Timber.d(pagingData.toString())
                 adapter.submitData(pagingData)
             }

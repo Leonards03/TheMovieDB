@@ -68,8 +68,7 @@ class SearchMovieActivity : AppCompatActivity(), SearchView.OnQueryTextListener{
         }
         pagingJob = lifecycleScope.launch(Dispatchers.Main) {
             adapter.refresh()
-            viewModel.searchMovie()
-            viewModel.movieSearchResult?.collectLatest { pagingData ->
+            viewModel.movieSearchResult.collectLatest { pagingData ->
                 adapter.submitData(pagingData)
             }
         }

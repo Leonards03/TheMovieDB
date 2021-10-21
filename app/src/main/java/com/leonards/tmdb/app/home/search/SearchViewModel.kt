@@ -3,45 +3,36 @@ package com.leonards.tmdb.app.home.search
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.leonards.tmdb.core.domain.model.Movie
-import com.leonards.tmdb.core.domain.model.TvShow
 import com.leonards.tmdb.core.domain.usecase.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import timber.log.Timber
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     handle: SavedStateHandle,
     private val searchUseCase: SearchUseCase,
 ) : ViewModel() {
     val query = MutableStateFlow(String())
-
     init {
         handle.get<String>(EXTRA_QUERY)?.let {
             query.value = it
-            Timber.d(it)
         }
     }
 
-    var movieSearchResult: Flow<PagingData<Movie>>? = null
-
-    fun searchMovie() {
-        val newResult = searchUseCase.searchMovie(query.value)
+    val movieSearchResult by lazy {
+        query.flatMapLatest { searchUseCase.searchMovie(it) }
             .cachedIn(viewModelScope)
-        movieSearchResult = newResult
     }
 
-    var tvSearchResult: Flow<PagingData<TvShow>>? = null
-
-    fun searchTvShow(){
-        val newResult = searchUseCase.searchTvShow(query.value)
+    val tvSearchResult by lazy {
+        query.flatMapLatest { searchUseCase.searchTvShow(it) }
             .cachedIn(viewModelScope)
-        tvSearchResult = newResult
     }
 
     companion object {
