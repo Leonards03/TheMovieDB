@@ -225,7 +225,7 @@ class RepositoryImplTest {
         repositoryImpl.fetchMovie(movieId).test {
             // Then
             // Expect first emitted item should be a loading resource
-            awaitItem() shouldBe Resource.Loading<Resource<Movie>>()
+            awaitItem() shouldBe Loading<Resource<Movie>>()
 
             // Expecting a result in the next item
             when (val resource = awaitItem()) {
@@ -263,7 +263,7 @@ class RepositoryImplTest {
         repositoryImpl.fetchMovie(movieId).test {
             // Then
             // Expect first emitted item should be a loading resource
-            awaitItem() shouldBe Resource.Loading<Resource<Movie>>()
+            awaitItem() shouldBe Loading<Resource<Movie>>()
 
             // Expecting a result in the next item
             when (val resource: Resource<Movie> = awaitItem()) {
@@ -299,7 +299,7 @@ class RepositoryImplTest {
         repositoryImpl.fetchTvShow(tvShowId).test {
             // Then
             // Expect first emitted item should be a loading resource
-            awaitItem() shouldBe Resource.Loading<Resource<TvShow>>()
+            awaitItem() shouldBe Loading<Resource<TvShow>>()
             when (val resource: Resource<TvShow> = awaitItem()) {
                 is Error -> throw Error(resource.exception.message)
                 is Loading -> {
