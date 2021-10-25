@@ -2,13 +2,21 @@ package com.leonards.tmdb.app.detail
 
 import androidx.lifecycle.*
 import com.leonards.tmdb.app.R
+import com.leonards.tmdb.app.state.UiState
 import com.leonards.tmdb.app.utils.Event
 import com.leonards.tmdb.core.data.states.ItemType
+import com.leonards.tmdb.core.data.states.Resource
+import com.leonards.tmdb.core.domain.model.DomainModel
 import com.leonards.tmdb.core.domain.model.Movie
 import com.leonards.tmdb.core.domain.model.TvShow
 import com.leonards.tmdb.core.domain.usecase.DetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -18,17 +26,14 @@ class DetailViewModel @Inject constructor(
     private val detailUseCase: DetailUseCase,
 ) : ViewModel() {
     private val id: MutableStateFlow<Int> = MutableStateFlow(NO_ID)
-    var itemType: MutableStateFlow<ItemType> = MutableStateFlow(ItemType.Movie)
-
-    private val _itemIsFavorite: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val itemIsFavorite: LiveData<Boolean> = _itemIsFavorite.asLiveData()
-
+    private val itemType = MutableStateFlow(ItemType.Movie)
     private val _snackbarText = MutableLiveData<Event<Int>>()
-    val snackBarText: LiveData<Event<Int>> = _snackbarText
+    val snackBarText: LiveData<Event<Int>>
+        get() = _snackbarText
 
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading: LiveData<Boolean> = _isLoading.asLiveData()
-
+    private val _favoriteState = MutableStateFlow(false)
+    val favoriteState: LiveData<Boolean>
+        get() = _favoriteState.asLiveData()
     init {
         handle.get<Int>(EXTRA_ID)?.let {
             id.value = it
@@ -36,31 +41,62 @@ class DetailViewModel @Inject constructor(
         handle.get<ItemType>(EXTRA_TYPE)?.let {
             itemType.value = it
         }
+        handleIntent()
     }
 
-    val movieDetails by lazy { detailUseCase.getMovieDetails(id.value).asLiveData() }
+    val intent = Channel<DetailIntent>(Channel.UNLIMITED)
+    private val _state = MutableStateFlow<UiState<DomainModel>>(UiState.Idle)
+    val state: StateFlow<UiState<DomainModel>>
+        get() = _state
 
-    val tvShowDetails by lazy { detailUseCase.getTvShowDetails(id.value).asLiveData() }
-
-    fun setFavorite(movie: Movie) = detailUseCase.setFavorite(movie, _itemIsFavorite.value)
-
-    fun setFavorite(tvShow: TvShow) = detailUseCase.setFavorite(tvShow, _itemIsFavorite.value)
-
-    fun setFavoriteState(state: Boolean) {
-        _itemIsFavorite.value = state
+    private fun handleIntent() {
+        viewModelScope.launch {
+            intent.consumeAsFlow().collect { intent ->
+                when (intent) {
+                    is DetailIntent.FavoriteStateChanged -> favoriteStateChanged(intent.model)
+                    DetailIntent.FetchDetails -> fetchDetails()
+                }
+            }
+        }
     }
 
-    fun toggleFavoriteState() {
-        _itemIsFavorite.value = !_itemIsFavorite.value
-        _snackbarText.value = if (_itemIsFavorite.value)
-            Event(R.string.added_to_my_list)
-        else
+    private fun fetchDetails() {
+        val loadResult = when (itemType.value) {
+            ItemType.Movie -> detailUseCase.getMovieDetails(id.value)
+            ItemType.TvShow -> detailUseCase.getTvShowDetails(id.value)
+        }
+
+        viewModelScope.launch {
+            loadResult.collect { resource ->
+                _state.value = when (resource) {
+                    is Resource.Error -> UiState.Error(resource.exception)
+                    is Resource.Loading -> UiState.Loading
+                    is Resource.Success -> {
+                        _favoriteState.value = resource.dataFromDB()
+                        UiState.Success(resource.data)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun favoriteStateChanged(model: DomainModel) {
+        val itemIsFavorite = _favoriteState.value
+        _snackbarText.value = if (itemIsFavorite)
             Event(R.string.removed_from_my_list)
+        else
+            Event(R.string.added_to_my_list)
+        when (model) {
+            is Movie -> detailUseCase.setFavorite(model, itemIsFavorite)
+            is TvShow -> detailUseCase.setFavorite(model, itemIsFavorite)
+        }
     }
 
-
-    fun setLoadingState(state: Boolean) {
-        _isLoading.value = state
+    fun toggleFavoriteState(model: DomainModel) {
+        _favoriteState.value = !_favoriteState.value
+        viewModelScope.launch {
+            intent.send(DetailIntent.FavoriteStateChanged(model))
+        }
     }
 
     companion object {

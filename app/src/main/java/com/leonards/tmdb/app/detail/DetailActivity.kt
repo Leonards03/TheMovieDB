@@ -4,22 +4,22 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.leonards.tmdb.app.R
 import com.leonards.tmdb.app.databinding.ActivityDetailBinding
+import com.leonards.tmdb.app.state.UiState
 import com.leonards.tmdb.app.utils.AppPreferences
 import com.leonards.tmdb.app.utils.Event
-import com.leonards.tmdb.core.data.Constants
-import com.leonards.tmdb.core.data.states.ItemType
-import com.leonards.tmdb.core.data.states.Resource
-import com.leonards.tmdb.core.data.states.Resource.*
+import com.leonards.tmdb.core.domain.model.DomainModel
 import com.leonards.tmdb.core.domain.model.Movie
 import com.leonards.tmdb.core.domain.model.TvShow
 import com.leonards.tmdb.core.extension.glideImageWithOptions
 import com.leonards.tmdb.core.extension.invisible
 import com.leonards.tmdb.core.extension.showSnackbar
 import com.leonards.tmdb.core.extension.visible
-import com.leonards.tmdb.core.utils.ImageSize
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -37,26 +37,40 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         enableBackButton()
-        setupObserver()
+        observeState()
+        lifecycleScope.launchWhenCreated {
+            viewModel.intent.send(DetailIntent.FetchDetails)
+        }
     }
 
-    private fun setupObserver() = with(viewModel) {
-        when (itemType.value) {
-            ItemType.Movie ->
-                movieDetails.observe(this@DetailActivity, ::renderMovieDetails)
-
-            ItemType.TvShow ->
-                tvShowDetails.observe(this@DetailActivity, ::renderTvShowDetails)
+    private fun observeState() {
+        lifecycleScope.launch {
+            viewModel.state.collect { state ->
+                when (state) {
+                    UiState.Idle -> {
+                    }
+                    is UiState.Error -> handleError(state.throwable)
+                    is UiState.Success -> {
+                        handleLoading(state is UiState.Loading)
+                        Timber.d(state.data.toString())
+                        when (state.data) {
+                            is Movie -> renderMovieDetails(state.data)
+                            is TvShow -> renderTvShowDetails(state.data)
+                        }
+                    }
+                    UiState.Loading -> handleLoading(state is UiState.Loading)
+                }
+            }
         }
-        isLoading.observe(this@DetailActivity, ::onLoadingChanged)
     }
 
     private fun observeFavoriteState(title: String) {
-        content.btnFavorite.isEnabled = true
-        viewModel.itemIsFavorite.observe(this@DetailActivity, { itemIsFavorite ->
-            val btnTextId =
-                if (itemIsFavorite) R.string.remove_from_my_list else R.string.add_to_my_list
-            content.btnFavorite.text = getString(btnTextId)
+        viewModel.favoriteState.observe(this, { itemIsFavorite ->
+            val buttonText = if (itemIsFavorite)
+                R.string.remove_from_my_list
+            else
+                R.string.add_to_my_list
+            content.btnFavorite.text = getString(buttonText)
         })
         viewModel.snackBarText.observe(this, { event ->
             showSnackbar(event, title)
@@ -68,38 +82,23 @@ class DetailActivity : AppCompatActivity() {
         content.root.showSnackbar(getString(message, title))
     }
 
-    private fun renderMovieDetails(resource: Resource<Movie>) {
-        when (resource) {
-            is Success -> resource.data.let { movie ->
-                viewModel.setFavoriteState(resource.dataFromDB())
-                observeFavoriteState(movie.title)
-                bindToView(movie)
-            }
-            is Loading -> viewModel.setLoadingState(true)
-            is Error -> handleError(resource.exception)
-        }
+    private fun renderMovieDetails(movie: Movie) {
+        observeFavoriteState(movie.title)
+        bindToView(movie)
     }
 
-    private fun renderTvShowDetails(resource: Resource<TvShow>) {
-        when (resource) {
-            is Success -> resource.data.let { tvShow ->
-                viewModel.setFavoriteState(resource.dataFromDB())
-                observeFavoriteState(tvShow.title)
-                bindToView(tvShow)
-            }
-            is Loading -> viewModel.setLoadingState(true)
-            is Error -> handleError(resource.exception)
-        }
+    private fun renderTvShowDetails(tvShow: TvShow) {
+        observeFavoriteState(tvShow.title)
+        bindToView(tvShow)
     }
 
     private fun bindToView(movie: Movie) {
         val imageSize = appPreferences.getImageSize()
         val backdropUrl = movie.getBackdropUrl(imageSize)
-        binding.imgCover.glideImageWithOptions(backdropUrl)
+        val posterUrl = movie.getPosterUrl(imageSize)
+        bind(backdropUrl, posterUrl, movie)
 
         with(content) {
-            val posterUrl = movie.getPosterUrl(imageSize)
-            imgPoster.glideImageWithOptions(posterUrl)
             tvTitle.text = movie.title
             tvOverview.text = movie.overview
             ratingBar.rating = movie.voteAverage.toFloat()
@@ -109,25 +108,19 @@ class DetailActivity : AppCompatActivity() {
             tvDirector.text = movie.director
             tvGenre.text = movie.genres
             tvReleaseDate.text = movie.releaseDate
-            btnFavorite.setOnClickListener {
-                viewModel.toggleFavoriteState()
-                viewModel.setFavorite(movie)
-            }
         }
-        viewModel.setLoadingState(false)
     }
 
     private fun bindToView(tvShow: TvShow) {
-        val backdropUrl = tvShow.getBackdropUrl(ImageSize.Medium)
-        binding.imgCover.glideImageWithOptions(backdropUrl)
+        val imageSize = appPreferences.getImageSize()
+        val backdropUrl = tvShow.getBackdropUrl(imageSize)
+        val posterUrl = tvShow.getPosterUrl(imageSize)
+        bind(backdropUrl, posterUrl, tvShow)
+
         with(content) {
-            val posterUrl = Constants.getPosterUrl(tvShow.poster, ImageSize.Medium)
-            imgPoster.glideImageWithOptions(posterUrl)
             tvTitle.text = tvShow.title
             tvOverview.text = tvShow.overview
-
             tvGenre.text = tvShow.genres
-
             ratingBar.rating = tvShow.voteAverage.toFloat()
                 .div(2)
             tvRating.text = tvShow.voteAverage.toString()
@@ -143,18 +136,22 @@ class DetailActivity : AppCompatActivity() {
             tvReleaseDateField.text = getString(R.string.airing_date)
             tvReleaseDate.text =
                 getString(R.string.airing_date_format, tvShow.firstAirDate, tvShow.lastAirDate)
-
-            btnFavorite.setOnClickListener {
-                viewModel.toggleFavoriteState()
-                viewModel.setFavorite(tvShow)
-            }
         }
-        viewModel.setLoadingState(false)
     }
 
-    private fun handleError(exception: Exception) = Timber.e(exception)
 
-    private fun onLoadingChanged(isLoading: Boolean) = with(content) {
+    private fun bind(backdropUrl: String, posterUrl: String, model: DomainModel) = with(binding) {
+        imgCover.glideImageWithOptions(backdropUrl)
+        with(content) {
+            imgPoster.glideImageWithOptions(posterUrl)
+            btnFavorite.setOnClickListener { viewModel.toggleFavoriteState(model) }
+            btnFavorite.isEnabled = true
+        }
+    }
+
+    private fun handleError(throwable: Throwable) = Timber.e(throwable)
+
+    private fun handleLoading(isLoading: Boolean) = with(content) {
         if (isLoading) {
             details.invisible()
             shimmerContainer.startShimmer()
