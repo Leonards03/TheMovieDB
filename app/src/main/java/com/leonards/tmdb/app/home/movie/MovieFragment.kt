@@ -31,7 +31,7 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
+class MovieFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
     private val viewModel: MovieViewModel by activityViewModels()
 
     /**
@@ -119,6 +119,8 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
             setOnQueryTextListener(this@MovieFragment)
         }
 
+        menu.findItem(R.id.search).setOnActionExpandListener(this)
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -137,6 +139,15 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextChange(newText: String?): Boolean = false
+
+    override fun onMenuItemActionExpand(p0: MenuItem?): Boolean = true
+
+    override fun onMenuItemActionCollapse(menuItem: MenuItem?): Boolean {
+        lifecycleScope.launch {
+            viewModel.movieIntent.send(MovieIntent.FetchMovie)
+        }
+        return true
+    }
 
     /**
      * ref https://github.com/android/architecture-components-samples/blob/main/ViewBindingSample/app/src/main/java/com/android/example/viewbindingsample/InflateFragment.kt
