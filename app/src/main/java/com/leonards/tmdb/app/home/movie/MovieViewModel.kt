@@ -37,8 +37,8 @@ class MovieViewModel @Inject constructor(
             movieIntent.consumeAsFlow().collect { intent ->
                 previousIntent?.let { }
                 when (intent) {
-                    MovieIntent.fetchMovie -> fetchMovie()
-                    MovieIntent.searchMovie -> searchMovie()
+                    MovieIntent.FetchMovie -> fetchMovie()
+                    MovieIntent.SearchMovie -> searchMovie()
                 }
             }
         }
@@ -47,7 +47,7 @@ class MovieViewModel @Inject constructor(
     init {
         handleIntent()
         viewModelScope.launch {
-            movieIntent.send(MovieIntent.fetchMovie)
+            movieIntent.send(MovieIntent.FetchMovie)
         }
     }
 

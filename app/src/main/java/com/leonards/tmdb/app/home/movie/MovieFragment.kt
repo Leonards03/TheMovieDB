@@ -122,7 +122,7 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
             } else {
                 viewModel.query.value = query
                 viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.movieIntent.send(MovieIntent.searchMovie)
+                    viewModel.movieIntent.send(MovieIntent.SearchMovie)
                 }
             }
         }
