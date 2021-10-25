@@ -28,7 +28,6 @@
             android:name=".splash.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
-            android:label="@string/title_activity_splash"
             android:theme="@style/Theme.TheMovieDB.NoActionBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
