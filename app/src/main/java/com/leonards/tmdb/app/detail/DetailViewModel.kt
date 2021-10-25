@@ -84,9 +84,9 @@ class DetailViewModel @Inject constructor(
     private fun favoriteStateChanged(model: DomainModel) {
         val itemIsFavorite = _favoriteState.value
         _snackbarText.value = if (itemIsFavorite)
-            Event(R.string.removed_from_my_list)
-        else
             Event(R.string.added_to_my_list)
+        else
+            Event(R.string.removed_from_my_list)
         when (model) {
             is Movie -> detailUseCase.setFavoriteMovie(model, itemIsFavorite)
             is TvShow -> detailUseCase.setFavoriteTvShow(model, itemIsFavorite)
