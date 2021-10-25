@@ -16,7 +16,7 @@ data class TvShow(
     val lastAirDate: String,
     val numberOfSeasons: Int,
     val status: String,
-): DomainModel(tvShowId, ItemType.TvShow) {
+): DomainModel(tvShowId) {
     fun getPosterUrl(imageSize: ImageSize) = Constants.getPosterUrl(poster, imageSize)
     fun getBackdropUrl(imageSize: ImageSize) = Constants.getBackdropUrl(backdrop, imageSize)
 }

@@ -15,7 +15,7 @@ data class Movie(
     val runtime: Int?,
     val releaseDate: String,
     val director: String,
-) : DomainModel(movieId, ItemType.Movie) {
+) : DomainModel(movieId) {
     fun getPosterUrl(imageSize: ImageSize) = Constants.getPosterUrl(poster, imageSize)
     fun getBackdropUrl(imageSize: ImageSize) = Constants.getBackdropUrl(backdrop, imageSize)
 }
