@@ -9,7 +9,6 @@ import com.leonards.tmdb.core.domain.interactor.MovieUseCase
 import com.leonards.tmdb.core.domain.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -19,12 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieViewModel @Inject constructor(
     private val movieUseCase: MovieUseCase,
-    private val searchUseCase: SearchUseCase,
 ) : ViewModel() {
-    val moviesStream by lazy {
-        movieUseCase.fetchMovies()
-            .cachedIn(viewModelScope)
-    }
     val movieIntent = Channel<MovieIntent>(Channel.UNLIMITED)
     private val _state = MutableStateFlow<UiState<PagingData<Movie>>>(UiState.Idle)
     val state: StateFlow<UiState<PagingData<Movie>>>
@@ -64,14 +58,11 @@ class MovieViewModel @Inject constructor(
     private fun searchMovie() {
         _state.value = UiState.Loading
         viewModelScope.launch {
-            query.flatMapLatest { searchUseCase.searchMovie(it) }
+            query.flatMapLatest { movieUseCase.searchMovie(it) }
                 .cachedIn(viewModelScope)
                 .collectLatest {
                     _state.value = UiState.Success(it)
                 }
         }
     }
-
-
-
 }
