@@ -16,8 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.leonards.tmdb.app.R
 import com.leonards.tmdb.app.databinding.FragmentTvShowBinding
 import com.leonards.tmdb.app.extension.intentToDetailsActivity
-import com.leonards.tmdb.app.home.search.SearchViewModel.Companion.EXTRA_QUERY
-import com.leonards.tmdb.app.home.search.tvshow.SearchTvShowActivity
+import com.leonards.tmdb.app.state.UiState
 import com.leonards.tmdb.app.utils.AppPreferences
 import com.leonards.tmdb.core.domain.model.TvShow
 import com.leonards.tmdb.core.extension.invisible
@@ -127,9 +126,6 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
             if (submittedText.isBlank() || submittedText.isEmpty()) {
                 binding.root.showSnackbar(getString(R.string.message_query_null))
             } else {
-                Intent(requireActivity(), SearchTvShowActivity::class.java).apply {
-                    putExtra(EXTRA_QUERY, submittedText)
-                    startActivity(this)
                 }
             }
         }
