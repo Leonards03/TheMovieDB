@@ -6,10 +6,10 @@ import com.leonards.tmdb.app.state.UiState
 import com.leonards.tmdb.app.utils.Event
 import com.leonards.tmdb.core.data.states.ItemType
 import com.leonards.tmdb.core.data.states.Resource
+import com.leonards.tmdb.core.domain.interactor.DetailUseCase
 import com.leonards.tmdb.core.domain.model.DomainModel
 import com.leonards.tmdb.core.domain.model.Movie
 import com.leonards.tmdb.core.domain.model.TvShow
-import com.leonards.tmdb.core.domain.usecase.DetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,6 +34,7 @@ class DetailViewModel @Inject constructor(
     private val _favoriteState = MutableStateFlow(false)
     val favoriteState: LiveData<Boolean>
         get() = _favoriteState.asLiveData()
+
     init {
         handle.get<Int>(EXTRA_ID)?.let {
             id.value = it
@@ -87,8 +88,8 @@ class DetailViewModel @Inject constructor(
         else
             Event(R.string.added_to_my_list)
         when (model) {
-            is Movie -> detailUseCase.setFavorite(model, itemIsFavorite)
-            is TvShow -> detailUseCase.setFavorite(model, itemIsFavorite)
+            is Movie -> detailUseCase.setFavoriteMovie(model, itemIsFavorite)
+            is TvShow -> detailUseCase.setFavoriteTvShow(model, itemIsFavorite)
         }
     }
 

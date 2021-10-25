@@ -1,7 +1,7 @@
 package com.leonards.tmdb.app.di
 
 import com.leonards.tmdb.app.utils.AppPreferences
-import com.leonards.tmdb.core.domain.usecase.FavoriteUseCase
+import com.leonards.tmdb.core.domain.interactor.FavoriteUseCase
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent

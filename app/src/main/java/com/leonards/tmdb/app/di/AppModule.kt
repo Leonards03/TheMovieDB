@@ -1,13 +1,6 @@
 package com.leonards.tmdb.app.di
 
-import com.leonards.tmdb.core.domain.interactor.DetailInteractor
-import com.leonards.tmdb.core.domain.interactor.MovieInteractor
-import com.leonards.tmdb.core.domain.interactor.SearchInteractor
-import com.leonards.tmdb.core.domain.interactor.TvShowInteractor
-import com.leonards.tmdb.core.domain.usecase.DetailUseCase
-import com.leonards.tmdb.core.domain.usecase.MovieUseCase
-import com.leonards.tmdb.core.domain.usecase.SearchUseCase
-import com.leonards.tmdb.core.domain.usecase.TvShowUseCase
+import com.leonards.tmdb.core.domain.interactor.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -28,8 +21,4 @@ abstract class AppModule {
     @Binds
     @ViewModelScoped
     abstract fun bindsDetailUseCase(detailInteractor: DetailInteractor): DetailUseCase
-
-    @Binds
-    @ViewModelScoped
-    abstract fun bindsSearchUseCase(searchInteractor: SearchInteractor): SearchUseCase
 }

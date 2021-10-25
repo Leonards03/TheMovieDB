@@ -1,7 +1,7 @@
 package com.leonards.tmdb.app.di
 
 import com.leonards.tmdb.core.domain.interactor.FavoriteInteractor
-import com.leonards.tmdb.core.domain.usecase.FavoriteUseCase
+import com.leonards.tmdb.core.domain.interactor.FavoriteUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

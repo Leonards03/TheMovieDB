@@ -2,12 +2,12 @@ package com.leonards.tmdb.features.favorite.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.leonards.tmdb.core.domain.usecase.FavoriteUseCase
+import com.leonards.tmdb.core.domain.interactor.FavoriteUseCase
 import javax.inject.Inject
 
 class FavoriteViewModel @Inject constructor(
     favoriteUseCase: FavoriteUseCase,
-): ViewModel() {
+) : ViewModel() {
     val favoriteMovies = favoriteUseCase.getFavoriteMovies()
         .asLiveData()
 

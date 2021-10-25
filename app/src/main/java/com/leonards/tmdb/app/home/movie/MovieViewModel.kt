@@ -5,9 +5,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.leonards.tmdb.app.state.UiState
+import com.leonards.tmdb.core.domain.interactor.MovieUseCase
 import com.leonards.tmdb.core.domain.model.Movie
-import com.leonards.tmdb.core.domain.usecase.MovieUseCase
-import com.leonards.tmdb.core.domain.usecase.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
