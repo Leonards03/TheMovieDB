@@ -68,13 +68,14 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnAct
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.state.collect { state ->
                     when (state) {
-                        is UiState.Error -> showError(state.throwable)
                         UiState.Idle -> {
                             /** Do nothing **/
                         }
-                        UiState.Loading -> {
-                            binding.stateLoading.visible()
-                        }
+
+                        UiState.Loading -> binding.stateLoading.visible()
+
+                        is UiState.Error -> showError(state.throwable)
+
                         is UiState.Success -> {
                             binding.stateLoading.invisible()
                             pagingJob?.cancel()
