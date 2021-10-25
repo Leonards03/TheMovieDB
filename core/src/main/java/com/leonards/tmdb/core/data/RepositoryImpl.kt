@@ -35,13 +35,10 @@ class RepositoryImpl @Inject constructor(
     @IoDispatcher
     private val dispatcher: CoroutineDispatcher,
 ) : Repository {
-    override fun fetchMovies(): Flow<PagingData<Movie>> {
-
-        return Pager(
-            config = DEFAULT_PAGING_CONFIG,
-            pagingSourceFactory = { MoviePagingSource(remoteDataSource) }
-        ).flow
-    }
+    override fun fetchMovies(): Flow<PagingData<Movie>> = Pager(
+        config = DEFAULT_PAGING_CONFIG,
+        pagingSourceFactory = { MoviePagingSource(remoteDataSource) }
+    ).flow
 
     override fun fetchTvShows() = Pager(
         config = DEFAULT_PAGING_CONFIG,
