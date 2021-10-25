@@ -62,7 +62,6 @@ class TvShowViewModel @Inject constructor(
                 .collectLatest {
                     _state.value = UiState.Success(it)
                 }
-
         }
     }
 }
