@@ -25,14 +25,16 @@ import com.leonards.tmdb.core.extension.visible
 import com.leonards.tmdb.core.presentation.adapter.TvShowPagedAdapter
 import com.leonards.tmdb.core.utils.ImageSize
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
+class TvShowFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
     private val viewModel: TvShowViewModel by activityViewModels()
 
     // variable to assign binding onCreateView and release on DestroyView
@@ -62,7 +64,27 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
             setupRecyclerView(appPreferences.getImageSize())
-            loadTvShows()
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.state.collect { state ->
+                    when (state) {
+                        UiState.Idle -> {
+                        }
+
+                        UiState.Loading -> binding.stateLoading.visible()
+
+                        is UiState.Error -> showError(state.throwable)
+
+                        is UiState.Success -> {
+                            binding.stateLoading.invisible()
+                            pagingJob?.cancel()
+                            pagingJob = lifecycleScope.launch {
+                                renderTvShows(state.data)
+                            }
+                        }
+                    }
+
+                }
+            }
         }
     }
 
@@ -78,34 +100,14 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    /**
-     * Setup the required observer on this Fragment
-     */
-    private fun loadTvShows() {
-        pagingJob?.cancel()
-        pagingJob = viewLifecycleOwner.lifecycleScope.launch {
-            setLoadingState(true)
-            viewModel.tvShowsStream.collectLatest(::renderTvShows)
-        }
-    }
-
     private suspend fun renderTvShows(pagingData: PagingData<TvShow>) {
-        binding.apply {
-            setLoadingState(false)
-            (binding.rvDiscoverTv.adapter as TvShowPagedAdapter)
-                .submitData(pagingData)
-        }
+        (binding.rvDiscoverTv.adapter as TvShowPagedAdapter)
+            .submitData(pagingData)
+
     }
 
-    private fun setLoadingState(isLoading: Boolean) {
-        binding.apply {
-            if (isLoading) {
-                Timber.d("loading")
-                stateLoading.root.visible()
-            } else {
-                stateLoading.root.invisible()
-            }
-        }
+    private fun showError(throwable: Throwable) {
+        Timber.d(throwable)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -118,6 +120,9 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
             queryHint = getString(R.string.hint_search_tv)
             setOnQueryTextListener(this@TvShowFragment)
         }
+
+        menu.findItem(R.id.search).setOnActionExpandListener(this)
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -126,6 +131,9 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
             if (submittedText.isBlank() || submittedText.isEmpty()) {
                 binding.root.showSnackbar(getString(R.string.message_query_null))
             } else {
+                viewModel.query.value = query
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewModel.intent.send(TvShowIntent.SearchTvShows)
                 }
             }
         }
@@ -140,5 +148,14 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun onMenuItemActionExpand(p0: MenuItem?): Boolean = true
+
+    override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
+        lifecycleScope.launch {
+            viewModel.intent.send(TvShowIntent.FetchTvShows)
+        }
+        return true
     }
 }
