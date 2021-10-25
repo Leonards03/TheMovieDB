@@ -1,11 +1,15 @@
 package com.leonards.tmdb.core.domain.interactor
 
-import com.leonards.tmdb.core.domain.repository.Repository
-import com.leonards.tmdb.core.domain.usecase.TvShowUseCase
+import com.leonards.tmdb.core.domain.usecase.FetchTvShows
+import com.leonards.tmdb.core.domain.usecase.SearchTvShow
 import javax.inject.Inject
 
-class TvShowInteractor @Inject constructor(
-    private val repository: Repository,
-) : TvShowUseCase {
-    override fun fetchTvShows() = repository.fetchTvShows()
+data class TvShowInteractor @Inject constructor(
+    override val fetchTvShows: FetchTvShows,
+    override val searchTvShows: SearchTvShow,
+) : TvShowUseCase
+
+interface TvShowUseCase {
+    val fetchTvShows: FetchTvShows
+    val searchTvShows: SearchTvShow
 }
