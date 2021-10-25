@@ -26,8 +26,10 @@ import com.leonards.tmdb.core.utils.ImageSize
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
+import timber.log.Timber
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
     private val viewModel: MovieViewModel by activityViewModels()
@@ -44,6 +46,8 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
      *   currently using it to avoid leak.
      **/
     private val binding get() = _binding!!
+
+    private var pagingJob: Job? = null
 
     @Inject
     lateinit var appPreferences: AppPreferences
@@ -73,7 +77,10 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
                         }
                         is UiState.Success -> {
                             binding.stateLoading.invisible()
-                            renderMovies(state.data)
+                            pagingJob?.cancel()
+                            pagingJob = lifecycleScope.launch {
+                                renderMovies(state.data)
+                            }
                         }
                     }
                 }
@@ -98,7 +105,7 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun showError(throwable: Throwable) {
-
+        Timber.d(throwable)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -138,5 +145,4 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener {
         _binding = null
         super.onDestroyView()
     }
-
 }
