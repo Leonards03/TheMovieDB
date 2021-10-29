@@ -17,7 +17,7 @@ buildscript {
         hilt_viewmodels = "1.0.0-alpha03"
         idling_version = "3.0.2"
         kotest_version = '4.6.2'
-        ktxcore_version = "1.5.0"
+        ktxcore_version = "1.7.0"
         leakcanary_version = "2.7"
         lifecycle_version = "2.3.1"
         lottie_version = "3.7.0"
