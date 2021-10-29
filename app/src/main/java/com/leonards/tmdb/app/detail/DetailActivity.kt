@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.leonards.tmdb.app.R
 import com.leonards.tmdb.app.databinding.ActivityDetailBinding
 import com.leonards.tmdb.app.state.UiState
@@ -45,20 +47,21 @@ class DetailActivity : AppCompatActivity() {
 
     private fun observeState() {
         lifecycleScope.launch {
-            viewModel.state.collect { state ->
-                when (state) {
-                    UiState.Idle -> {
-                    }
-                    is UiState.Error -> handleError(state.throwable)
-                    is UiState.Success -> {
-                        handleLoading(state is UiState.Loading)
-                        Timber.d(state.data.toString())
-                        when (state.data) {
-                            is Movie -> renderMovieDetails(state.data)
-                            is TvShow -> renderTvShowDetails(state.data)
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.state.collect { state ->
+                    when (state) {
+                        UiState.Idle -> {
+                        }
+                        UiState.Loading -> handleLoading(state is UiState.Loading)
+                        is UiState.Error -> handleError(state.throwable)
+                        is UiState.Success -> {
+                            handleLoading(state is UiState.Loading)
+                            when (state.data) {
+                                is Movie -> renderMovieDetails(state.data)
+                                is TvShow -> renderTvShowDetails(state.data)
+                            }
                         }
                     }
-                    UiState.Loading -> handleLoading(state is UiState.Loading)
                 }
             }
         }

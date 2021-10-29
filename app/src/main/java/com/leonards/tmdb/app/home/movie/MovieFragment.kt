@@ -8,7 +8,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,22 +68,18 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnAct
         if (activity != null) {
             setupRecyclerView(appPreferences.getImageSize())
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.state.collect { state ->
-                    when (state) {
-                        UiState.Idle -> {
-                            /** Do nothing **/
-                        }
-
-                        UiState.Loading -> binding.stateLoading.visible()
-
-                        is UiState.Error -> showError(state.throwable)
-
-                        is UiState.Success -> {
-                            binding.stateLoading.invisible()
-                            pagingJob?.cancel()
-                            pagingJob = lifecycleScope.launch {
-                                renderMovies(state.data)
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.state.collect { state ->
+                        when (state) {
+                            UiState.Idle -> {
+                                /** Do nothing **/
                             }
+
+                            UiState.Loading -> binding.stateLoading.visible()
+
+                            is UiState.Error -> showError(state.throwable)
+
+                            is UiState.Success -> renderMovies(state.data)
                         }
                     }
                 }
@@ -101,8 +99,12 @@ class MovieFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnAct
     }
 
     private suspend fun renderMovies(pagingData: PagingData<Movie>) {
-        (binding.rvDiscoverMovie.adapter as MoviePagedAdapter)
-            .submitData(pagingData)
+        binding.stateLoading.invisible()
+        pagingJob?.cancel()
+        pagingJob = viewLifecycleOwner.lifecycleScope.launch {
+            (binding.rvDiscoverMovie.adapter as MoviePagedAdapter)
+                .submitData(pagingData)
+        }
     }
 
     private fun showError(throwable: Throwable) {

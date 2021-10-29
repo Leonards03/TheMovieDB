@@ -60,6 +60,7 @@ dependencies {
     implementation "androidx.preference:preference-ktx:$preference_version"
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
 
     implementation 'com.google.firebase:firebase-analytics-ktx:19.0.1'
     implementation 'com.google.firebase:firebase-crashlytics:18.2.1'

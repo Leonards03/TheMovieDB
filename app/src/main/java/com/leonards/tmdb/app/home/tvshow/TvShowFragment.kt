@@ -1,7 +1,6 @@
 package com.leonards.tmdb.app.home.tvshow
 
 import android.app.SearchManager
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.*
@@ -9,7 +8,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,24 +66,20 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnAc
         if (activity != null) {
             setupRecyclerView(appPreferences.getImageSize())
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.state.collect { state ->
-                    when (state) {
-                        UiState.Idle -> {
-                        }
-
-                        UiState.Loading -> binding.stateLoading.visible()
-
-                        is UiState.Error -> showError(state.throwable)
-
-                        is UiState.Success -> {
-                            binding.stateLoading.invisible()
-                            pagingJob?.cancel()
-                            pagingJob = lifecycleScope.launch {
-                                renderTvShows(state.data)
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.state.collect { state ->
+                        when (state) {
+                            UiState.Idle -> {
                             }
-                        }
-                    }
 
+                            UiState.Loading -> binding.stateLoading.visible()
+
+                            is UiState.Error -> showError(state.throwable)
+
+                            is UiState.Success -> renderTvShows(state.data)
+                        }
+
+                    }
                 }
             }
         }
@@ -101,9 +98,12 @@ class TvShowFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnAc
     }
 
     private suspend fun renderTvShows(pagingData: PagingData<TvShow>) {
-        (binding.rvDiscoverTv.adapter as TvShowPagedAdapter)
-            .submitData(pagingData)
-
+        binding.stateLoading.invisible()
+        pagingJob?.cancel()
+        pagingJob = viewLifecycleOwner.lifecycleScope.launch {
+            (binding.rvDiscoverTv.adapter as TvShowPagedAdapter)
+                .submitData(pagingData)
+        }
     }
 
     private fun showError(throwable: Throwable) {
