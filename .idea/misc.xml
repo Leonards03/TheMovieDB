@@ -7,6 +7,10 @@
         <entry key="..\:/Users/edwin/AndroidStudioProjects/TheMovieDB-Dummy/app/src/main/res/layout/fragment_movie.xml" value="0.2" />
         <entry key="..\:/Users/edwin/AndroidStudioProjects/TheMovieDB-Dummy/app/src/main/res/layout/fragment_tv_show.xml" value="0.2" />
         <entry key="..\:/Users/edwin/AndroidStudioProjects/TheMovieDB-Dummy/app/src/main/res/layout/state_loading.xml" value="0.2" />
+        <entry key="..\:/Users/edwin/AndroidStudioProjects/TheMovieDB-Dummy/core/src/main/res/drawable/ic_baseline_broken_image_24.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/edwin/AndroidStudioProjects/TheMovieDB-Dummy/core/src/main/res/layout/item_row_layout.xml" value="0.1" />
+        <entry key="..\:/Users/edwin/AndroidStudioProjects/TheMovieDB-Dummy/features/src/main/res/layout/fragment_favorite.xml" value="0.1" />
+        <entry key="..\:/Users/edwin/AndroidStudioProjects/TheMovieDB-Dummy/features/src/main/res/layout/fragment_favorite_container.xml" value="0.1" />
       </map>
     </option>
   </component>
